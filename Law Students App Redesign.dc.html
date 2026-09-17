@@ -1,0 +1,2602 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics="">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="design_doc_mode" content="canvas">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f0f0f; color: #fff; }
+a { color: #d4af37; text-decoration: none; }
+a:hover { color: #e6c547; }
+
+/* Color Scheme */
+:root {
+  --black: #0f0f0f;
+  --dark: #1a1a1a;
+  --gold: #d4af37;
+  --gold-light: #e6c547;
+  --gold-dark: #b8860b;
+  --gray: #b0b0b0;
+  --light-bg: #2a2a2a;
+  --primary-color: {{ primaryColor }};
+  --primary-light: {{ primaryLight }};
+  --secondary-color: {{ secondaryColor }};
+  --bg-color: {{ backgroundColor }};
+  --card-bg: {{ cardBackground }};
+  --text-color: {{ textColor }};
+}
+
+/* Header & Navigation */
+.header {
+  background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+  border-bottom: 2px solid #d4af37;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 12px rgba(212, 175, 55, 0.1);
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-section img {
+  height: 40px;
+  width: auto;
+}
+
+.logo-text {
+  font-size: 18px;
+  font-weight: 700;
+  color: #d4af37;
+  letter-spacing: 1px;
+}
+
+.nav-menu {
+  display: flex;
+  gap: 30px;
+  list-style: none;
+}
+
+.nav-menu a {
+  font-size: 14px;
+  font-weight: 600;
+  color: #b0b0b0;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.nav-menu a:hover {
+  color: #d4af37;
+}
+
+.nav-menu a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #d4af37;
+  transition: width 0.3s ease;
+}
+
+.nav-menu a:hover::after {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .nav-menu { 
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+    flex-direction: column;
+    padding: 20px;
+    gap: 15px;
+    border-bottom: 2px solid #d4af37;
+    z-index: 999;
+  }
+  .nav-menu.active { display: flex; }
+  .nav-toggle { display: block; }
+}
+
+/* Hero Section */
+.hero {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+  padding: 60px 20px;
+  text-align: center;
+  border-bottom: 1px solid #d4af37;
+}
+
+.hero-content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.hero-logo {
+  height: 70px;
+  width: auto;
+  margin-bottom: 20px;
+  display: inline-block;
+}
+
+.hero h1 {
+  font-size: 48px;
+  font-weight: 800;
+  margin-bottom: 15px;
+  background: linear-gradient(135deg, #d4af37 0%, #e6c547 50%, #d4af37 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-tagline {
+  font-size: 20px;
+  color: #d4af37;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.hero-desc {
+  font-size: 14px;
+  color: #b0b0b0;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 12px 28px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+  color: #000;
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 25px rgba(212, 175, 55, 0.5);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--primary-color);
+  border: 2px solid var(--primary-color);
+}
+
+.btn-secondary:hover {
+  background: var(--primary-color);
+  color: #000;
+}
+
+@media (max-width: 768px) {
+  .hero { padding: 40px 20px; }
+  .hero h1 { font-size: 36px; }
+  .hero-tagline { font-size: 18px; }
+}
+
+/* Quick Access Grid */
+.quick-access {
+  background: #0f0f0f;
+  padding: 40px 20px;
+  border-bottom: 1px solid #d4af37;
+}
+
+.quick-access-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 28px;
+  font-weight: 700;
+  color: #d4af37;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.quick-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 20px;
+}
+
+.quick-item {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+  padding: 25px;
+  text-align: center;
+  border: 2px solid #d4af37;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.quick-item:hover {
+  background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%);
+  color: #000;
+  transform: translateY(-8px);
+  box-shadow: 0 8px 24px rgba(212, 175, 55, 0.3);
+}
+
+.quick-item h3 {
+  font-size: 32px;
+  font-weight: 800;
+  margin: 0;
+}
+
+.quick-item p {
+  font-size: 12px;
+  color: #b0b0b0;
+  margin-top: 8px;
+}
+
+.quick-item:hover p {
+  color: #000;
+}
+
+@media (max-width: 768px) {
+  .quick-grid { grid-template-columns: repeat(3, 1fr); }
+  .quick-item h3 { font-size: 24px; }
+}
+
+/* About Section */
+.about {
+  background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+  padding: 50px 20px;
+  border-bottom: 1px solid #d4af37;
+}
+
+.about-container {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.about-label {
+  display: inline-block;
+  background: rgba(212, 175, 55, 0.1);
+  color: #d4af37;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+  border: 1px solid #d4af37;
+}
+
+.about h2 {
+  font-size: 36px;
+  font-weight: 800;
+  color: #d4af37;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.about p {
+  font-size: 14px;
+  color: #b0b0b0;
+  line-height: 1.8;
+  margin: 0;
+}
+
+.about p strong {
+  color: #d4af37;
+}
+
+@media (max-width: 768px) {
+  .about h2 { font-size: 28px; }
+  .about p { font-size: 13px; }
+}
+
+/* Content Cards Section */
+.content-section {
+  background: #0f0f0f;
+  padding: 50px 20px;
+  border-bottom: 1px solid #d4af37;
+}
+
+.content-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
+}
+
+.card {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+  border: 2px solid #d4af37;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 35px rgba(212, 175, 55, 0.25);
+  border-color: #e6c547;
+}
+
+.card-image {
+  width: 100%;
+  height: 180px;
+  background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  font-weight: 700;
+  color: #000;
+  overflow: hidden;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-body {
+  padding: 20px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #d4af37;
+  margin-bottom: 10px;
+}
+
+.card-desc {
+  font-size: 13px;
+  color: #b0b0b0;
+  line-height: 1.6;
+  margin-bottom: 15px;
+  flex-grow: 1;
+}
+
+.card-link {
+  color: #d4af37;
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  align-self: flex-start;
+}
+
+.card-link:hover {
+  color: #e6c547;
+  margin-left: 8px;
+}
+
+@media (max-width: 768px) {
+  .cards-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+  .card-image { height: 150px; }
+}
+
+/* Footer */
+.footer {
+  background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+  border-top: 2px solid #d4af37;
+  padding: 40px 20px 20px;
+  text-align: center;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.footer-col h4 {
+  font-size: 14px;
+  font-weight: 700;
+  color: #d4af37;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+  letter-spacing: 1px;
+}
+
+.footer-col ul {
+  list-style: none;
+}
+
+.footer-col li {
+  margin-bottom: 10px;
+}
+
+.footer-col a {
+  font-size: 13px;
+  color: #b0b0b0;
+  transition: all 0.3s ease;
+}
+
+.footer-col a:hover {
+  color: #d4af37;
+  margin-left: 5px;
+}
+
+.footer-bottom {
+  border-top: 1px solid #d4af37;
+  padding-top: 20px;
+  font-size: 12px;
+  color: #b0b0b0;
+}
+
+@media (max-width: 768px) {
+  .footer-content { grid-template-columns: 1fr; gap: 20px; }
+}
+
+/* Responsive Mobile */
+@media (max-width: 480px) {
+  .header { padding: 12px 15px; }
+  .logo-text { font-size: 14px; }
+  .hero { padding: 30px 15px; }
+  .hero h1 { font-size: 28px; }
+  .hero-tagline { font-size: 16px; }
+  .section-title { font-size: 22px; }
+  .quick-grid { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .quick-item { padding: 15px; }
+  .quick-item h3 { font-size: 20px; }
+}
+</style>
+</helmet>
+
+<!-- Home Page -->
+<section data-screen-label="01" style="background: #0f0f0f; min-height: 100vh;">
+  <header class="header">
+    <div class="logo-section">
+      <img src="./logo-full.png" alt="Law Students Logo" style="width: 40px; height: 40px; object-fit: contain;">
+      <span class="logo-text">LAW STUDENTS</span>
+    </div>
+    <nav>
+      <ul class="nav-menu">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#courses">Courses</a></li>
+        <li><a href="#acts">Bare Acts</a></li>
+        <li><a href="#rules">Rules</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <button class="nav-toggle" aria-label="Toggle navigation menu">☰</button>
+  </header>
+
+  <!-- Hero Section -->
+  
+
+  <div class="hero">
+    <div class="hero-content">
+      <img src="./logo-full.png" alt="Law Students" class="hero-logo">
+      <h1>Law Students</h1>
+      <p class="hero-tagline">Learn • Understand • Achieve</p>
+      <p class="hero-desc">A comprehensive platform for Legal Education, Examination Preparation, Legal Knowledge, Bare Acts, Rules, and Study Materials.</p>
+      <div class="hero-buttons">
+        <a href="#courses" class="btn btn-primary">Explore Courses</a>
+        <a href="#notes" class="btn btn-primary">Free Notes</a>
+        <a href="#knowledge" class="btn btn-primary">Legal Knowledge</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="quick-access">
+    <div class="quick-access-container">
+      <h2 class="section-title">Quick Access</h2>
+      <div class="quick-grid">
+        <div class="quick-item">
+          <h3>50+</h3>
+          <p>Courses</p>
+        </div>
+        <div class="quick-item">
+          <h3>500+</h3>
+          <p>Study Materials</p>
+        </div>
+        <div class="quick-item">
+          <h3>100+</h3>
+          <p>Bare Acts</p>
+        </div>
+        <div class="quick-item">
+          <h3>200+</h3>
+          <p>Rules</p>
+        </div>
+        <div class="quick-item">
+          <h3>1000+</h3>
+          <p>Legal Topics</p>
+        </div>
+        <div class="quick-item">
+          <h3>30+</h3>
+          <p>Exams</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="about">
+    <div class="about-container">
+      <span class="about-label">About Platform</span>
+      <h2>Welcome to Law Student</h2>
+      <p>Law Student is an educational and knowledge platform dedicated to students, aspirants and professionals pursuing legal and professional education. The platform provides structured courses, study materials, Bare Acts, Rules, Notifications, legal knowledge resources and examination-oriented preparation.</p>
+      <div style="margin-top: 30px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; text-align: left;">
+        <div style="padding: 15px; background: rgba(212, 175, 55, 0.1); border-radius: 6px; border-left: 3px solid #d4af37;">
+          <p style="margin: 0; color: #d4af37; font-weight: 700; font-size: 13px; text-transform: uppercase;">✓ Expert Instructors &amp; Knowledge</p>
+        </div>
+        <div style="padding: 15px; background: rgba(212, 175, 55, 0.1); border-radius: 6px; border-left: 3px solid #d4af37;">
+          <p style="margin: 0; color: #d4af37; font-weight: 700; font-size: 13px; text-transform: uppercase;">✓ Comprehensive Curriculum</p>
+        </div>
+        <div style="padding: 15px; background: rgba(212, 175, 55, 0.1); border-radius: 6px; border-left: 3px solid #d4af37;">
+          <p style="margin: 0; color: #d4af37; font-weight: 700; font-size: 13px; text-transform: uppercase;">✓ Hands-on Learning</p>
+        </div>
+        <div style="padding: 15px; background: rgba(212, 175, 55, 0.1); border-radius: 6px; border-left: 3px solid #d4af37;">
+          <p style="margin: 0; color: #d4af37; font-weight: 700; font-size: 13px; text-transform: uppercase;">✓ Career Advancement</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-section">
+    <div class="content-container">
+      <h2 class="section-title">Featured Courses</h2>
+      <div class="cards-grid">
+        <sc-if value="{{ showFeaturedCourses }}" hint-placeholder-val="{{ true }}">
+          <div class="card">
+            <div class="card-image">{{ courseImage1 }}</div>
+            <div class="card-body">
+              <h3 class="card-title">Constitutional Law</h3>
+              <p class="card-desc">Comprehensive study of constitutional principles and fundamental rights.</p>
+              <a href="#" class="card-link">Learn More →</a>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-image">{{ courseImage2 }}</div>
+            <div class="card-body">
+              <h3 class="card-title">Criminal Law</h3>
+              <p class="card-desc">In-depth analysis of criminal statutes and jurisprudence.</p>
+              <a href="#" class="card-link">Learn More →</a>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-image">{{ courseImage3 }}</div>
+            <div class="card-body">
+              <h3 class="card-title">Civil Procedure</h3>
+              <p class="card-desc">Complete guide to civil litigation and procedural law.</p>
+              <a href="#" class="card-link">Learn More →</a>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-image">{{ courseImage4 }}</div>
+            <div class="card-body">
+              <h3 class="card-title">Corporate Law</h3>
+              <p class="card-desc">Master business law and corporate governance principles.</p>
+              <a href="#" class="card-link">Learn More →</a>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-image">{{ courseImage5 }}</div>
+            <div class="card-body">
+              <h3 class="card-title">Administrative Law</h3>
+              <p class="card-desc">Study of government administration and public law.</p>
+              <a href="#" class="card-link">Learn More →</a>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-image">{{ courseImage6 }}</div>
+            <div class="card-body">
+              <h3 class="card-title">Legal Writing</h3>
+              <p class="card-desc">Develop professional legal drafting and writing skills.</p>
+              <a href="#" class="card-link">Learn More →</a>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </div>
+
+  <!-- Legal Knowledge Categories Section -->
+  <div style="background: #0f0f0f; padding: 50px 20px; border-bottom: 1px solid #d4af37;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+      <h2 class="section-title">Legal Knowledge Categories</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px;">
+        <div style="padding: 20px; background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; text-align: center; cursor: pointer; transition: all 0.3s ease;">
+          <div style="font-size: 28px; margin-bottom: 10px;">⚖️</div>
+          <p style="color: #d4af37; font-size: 13px; font-weight: 700; margin: 0; text-transform: uppercase;">Constitutional Law</p>
+        </div>
+        <div style="padding: 20px; background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; text-align: center; cursor: pointer; transition: all 0.3s ease;">
+          <div style="font-size: 28px; margin-bottom: 10px;">⚔️</div>
+          <p style="color: #d4af37; font-size: 13px; font-weight: 700; margin: 0; text-transform: uppercase;">Criminal Law</p>
+        </div>
+        <div style="padding: 20px; background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; text-align: center; cursor: pointer; transition: all 0.3s ease;">
+          <div style="font-size: 28px; margin-bottom: 10px;">📋</div>
+          <p style="color: #d4af37; font-size: 13px; font-weight: 700; margin: 0; text-transform: uppercase;">Civil Law</p>
+        </div>
+        <div style="padding: 20px; background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; text-align: center; cursor: pointer; transition: all 0.3s ease;">
+          <div style="font-size: 28px; margin-bottom: 10px;">🏢</div>
+          <p style="color: #d4af37; font-size: 13px; font-weight: 700; margin: 0; text-transform: uppercase;">Company Law</p>
+        </div>
+        <div style="padding: 20px; background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; text-align: center; cursor: pointer; transition: all 0.3s ease;">
+          <div style="font-size: 28px; margin-bottom: 10px;">👨‍⚖️</div>
+          <p style="color: #d4af37; font-size: 13px; font-weight: 700; margin: 0; text-transform: uppercase;">Family Law</p>
+        </div>
+        <div style="padding: 20px; background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; text-align: center; cursor: pointer; transition: all 0.3s ease;">
+          <div style="font-size: 28px; margin-bottom: 10px;">💼</div>
+          <p style="color: #d4af37; font-size: 13px; font-weight: 700; margin: 0; text-transform: uppercase;">Labor Law</p>
+        </div>
+        <div style="padding: 20px; background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; text-align: center; cursor: pointer; transition: all 0.3s ease;">
+          <div style="font-size: 28px; margin-bottom: 10px;">🖥️</div>
+          <p style="color: #d4af37; font-size: 13px; font-weight: 700; margin: 0; text-transform: uppercase;">Cyber Law</p>
+        </div>
+        <div style="padding: 20px; background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; text-align: center; cursor: pointer; transition: all 0.3s ease;">
+          <div style="font-size: 28px; margin-bottom: 10px;">🌍</div>
+          <p style="color: #d4af37; font-size: 13px; font-weight: 700; margin: 0; text-transform: uppercase;">International Law</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Legal Knowledge Inquiry Section -->
+  <div style="background: #1a1a1a; padding: 50px 20px; border-bottom: 1px solid #d4af37;">
+    <div style="max-width: 900px; margin: 0 auto;">
+      <h2 class="section-title">Have a Legal Question?</h2>
+      <div style="background: #0f0f0f; padding: 30px; border: 2px solid #d4af37; border-radius: 8px;">
+        <form style="display: flex; flex-direction: column; gap: 15px;">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+            <input type="text" placeholder="Your Name" style="padding: 12px; background: #1a1a1a; border: 1px solid #d4af37; color: #b0b0b0; border-radius: 4px;">
+            <input type="email" placeholder="Email" style="padding: 12px; background: #1a1a1a; border: 1px solid #d4af37; color: #b0b0b0; border-radius: 4px;">
+          </div>
+          <input type="tel" placeholder="Phone Number" style="padding: 12px; background: #1a1a1a; border: 1px solid #d4af37; color: #b0b0b0; border-radius: 4px;">
+          <textarea placeholder="Describe your legal inquiry..." style="padding: 12px; background: #1a1a1a; border: 1px solid #d4af37; color: #b0b0b0; border-radius: 4px; resize: vertical; min-height: 100px;"></textarea>
+          <button type="submit" class="btn btn-primary" style="align-self: flex-start;">Submit Inquiry →</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Government Exams Section -->
+  <div style="background: #0f0f0f; padding: 50px 20px; border-bottom: 1px solid #d4af37;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+      <h2 class="section-title">Government Examinations</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+        <div style="padding: 20px; background: #1a1a1a; border-left: 4px solid #d4af37; border-radius: 4px;">
+          <h3 style="color: #d4af37; margin: 0 0 8px 0; font-size: 16px; font-weight: 700;">CLAT</h3>
+          <p style="color: #b0b0b0; font-size: 13px; margin: 0; line-height: 1.5;">Common Law Admission Test</p>
+        </div>
+        <div style="padding: 20px; background: #1a1a1a; border-left: 4px solid #d4af37; border-radius: 4px;">
+          <h3 style="color: #d4af37; margin: 0 0 8px 0; font-size: 16px; font-weight: 700;">AIBE</h3>
+          <p style="color: #b0b0b0; font-size: 13px; margin: 0; line-height: 1.5;">All India Bar Examination</p>
+        </div>
+        <div style="padding: 20px; background: #1a1a1a; border-left: 4px solid #d4af37; border-radius: 4px;">
+          <h3 style="color: #d4af37; margin: 0 0 8px 0; font-size: 16px; font-weight: 700;">UPSC Exams</h3>
+          <p style="color: #b0b0b0; font-size: 13px; margin: 0; line-height: 1.5;">Civil Services &amp; Judiciary</p>
+        </div>
+        <div style="padding: 20px; background: #1a1a1a; border-left: 4px solid #d4af37; border-radius: 4px;">
+          <h3 style="color: #d4af37; margin: 0 0 8px 0; font-size: 16px; font-weight: 700;">UGC NET</h3>
+          <p style="color: #b0b0b0; font-size: 13px; margin: 0; line-height: 1.5;">National Eligibility Test</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Why Us Section -->
+  <div class="section" style="background: #1a1a1a;">
+    <div class="content-container">
+      <h2 class="section-title">Why Law Students?</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+        <div style="padding: 20px; background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%); border: 2px solid #d4af37; border-radius: 8px; text-align: center;">
+          <div style="font-size: 24px; margin-bottom: 10px;">👨‍🏫</div>
+          <h3 style="color: #d4af37; margin: 0 0 10px 0; font-size: 16px; font-weight: 700;">Expert Instructors</h3>
+          <p style="color: #b0b0b0; font-size: 13px; margin: 0; line-height: 1.5;">Learn from experienced legal professionals with decades of practice</p>
+        </div>
+        <div style="padding: 20px; background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%); border: 2px solid #d4af37; border-radius: 8px; text-align: center;">
+          <div style="font-size: 24px; margin-bottom: 10px;">📚</div>
+          <h3 style="color: #d4af37; margin: 0 0 10px 0; font-size: 16px; font-weight: 700;">Complete Content</h3>
+          <p style="color: #b0b0b0; font-size: 13px; margin: 0; line-height: 1.5;">Access complete study materials covering all major areas of law</p>
+        </div>
+        <div style="padding: 20px; background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%); border: 2px solid #d4af37; border-radius: 8px; text-align: center;">
+          <div style="font-size: 24px; margin-bottom: 10px;">🎓</div>
+          <h3 style="color: #d4af37; margin: 0 0 10px 0; font-size: 16px; font-weight: 700;">Flexible Learning</h3>
+          <p style="color: #b0b0b0; font-size: 13px; margin: 0; line-height: 1.5;">Study at your own pace with lifetime access to materials</p>
+        </div>
+        <div style="padding: 20px; background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%); border: 2px solid #d4af37; border-radius: 8px; text-align: center;">
+          <div style="font-size: 24px; margin-bottom: 10px;">💰</div>
+          <h3 style="color: #d4af37; margin: 0 0 10px 0; font-size: 16px; font-weight: 700;">Affordable Pricing</h3>
+          <p style="color: #b0b0b0; font-size: 13px; margin: 0; line-height: 1.5;">Quality legal education at competitive rates</p>
+        </div>
+        <div style="padding: 20px; background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%); border: 2px solid #d4af37; border-radius: 8px; text-align: center;">
+          <div style="font-size: 24px; margin-bottom: 10px;">🎯</div>
+          <h3 style="color: #d4af37; margin: 0 0 10px 0; font-size: 16px; font-weight: 700;">Exam Preparation</h3>
+          <p style="color: #b0b0b0; font-size: 13px; margin: 0; line-height: 1.5;">Dedicated coaching for UPSC, Bar, and other exams</p>
+        </div>
+        <div style="padding: 20px; background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%); border: 2px solid #d4af37; border-radius: 8px; text-align: center;">
+          <div style="font-size: 24px; margin-bottom: 10px;">🛟</div>
+          <h3 style="color: #d4af37; margin: 0 0 10px 0; font-size: 16px; font-weight: 700;">24/7 Support</h3>
+          <p style="color: #b0b0b0; font-size: 13px; margin: 0; line-height: 1.5;">Round-the-clock support from our dedicated team</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- How It Works Section -->
+  <div class="section" style="background: #0f0f0f;">
+    <div class="content-container">
+      <h2 class="section-title">How It Works</h2>
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;">
+        <div style="text-align: center;">
+          <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; color: #000; font-weight: 700; font-size: 18px;">01</div>
+          <h3 style="color: #d4af37; margin: 0 0 8px 0; font-size: 16px; font-weight: 700;">Select</h3>
+          <p style="color: #b0b0b0; font-size: 13px; margin: 0; line-height: 1.5;">Choose your programme or course</p>
+        </div>
+        <div style="text-align: center;">
+          <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; color: #000; font-weight: 700; font-size: 18px;">02</div>
+          <h3 style="color: #d4af37; margin: 0 0 8px 0; font-size: 16px; font-weight: 700;">Study</h3>
+          <p style="color: #b0b0b0; font-size: 13px; margin: 0; line-height: 1.5;">Go through structured materials</p>
+        </div>
+        <div style="text-align: center;">
+          <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; color: #000; font-weight: 700; font-size: 18px;">03</div>
+          <h3 style="color: #d4af37; margin: 0 0 8px 0; font-size: 16px; font-weight: 700;">Practice</h3>
+          <p style="color: #b0b0b0; font-size: 13px; margin: 0; line-height: 1.5;">Reinforce with tests and MCQs</p>
+        </div>
+        <div style="text-align: center;">
+          <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; color: #000; font-weight: 700; font-size: 18px;">04</div>
+          <h3 style="color: #d4af37; margin: 0 0 8px 0; font-size: 16px; font-weight: 700;">Achieve</h3>
+          <p style="color: #b0b0b0; font-size: 13px; margin: 0; line-height: 1.5;">Succeed in your exam or career</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gallery Section -->
+  <div style="background: #0f0f0f; padding: 50px 20px; border-bottom: 1px solid #d4af37;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+      <h2 class="section-title">Our Gallery</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+        <div style="aspect-ratio: 1; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 48px; cursor: pointer; transition: all 0.3s ease;">📚</div>
+        <div style="aspect-ratio: 1; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 48px; cursor: pointer; transition: all 0.3s ease;">🏫</div>
+        <div style="aspect-ratio: 1; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 48px; cursor: pointer; transition: all 0.3s ease;">👥</div>
+        <div style="aspect-ratio: 1; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 48px; cursor: pointer; transition: all 0.3s ease;">🎓</div>
+        <div style="aspect-ratio: 1; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 48px; cursor: pointer; transition: all 0.3s ease;">🏆</div>
+        <div style="aspect-ratio: 1; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 48px; cursor: pointer; transition: all 0.3s ease;">⭐</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Course Enquiry Section -->
+  <div class="section" style="background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);">
+    <div class="content-container" style="max-width: 900px;">
+      <h2 class="section-title">Interested in Our Courses?</h2>
+      <div style="background: #0f0f0f; padding: 30px; border: 2px solid #d4af37; border-radius: 8px;">
+        <form style="display: flex; flex-direction: column; gap: 15px;">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+            <div>
+              <label style="display: block; color: #d4af37; font-weight: 700; margin-bottom: 8px; font-size: 12px; text-transform: uppercase;">Full Name *</label>
+              <input type="text" placeholder="Your Name" style="width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #d4af37; color: #b0b0b0; border-radius: 4px;">
+            </div>
+            <div>
+              <label style="display: block; color: #d4af37; font-weight: 700; margin-bottom: 8px; font-size: 12px; text-transform: uppercase;">Phone Number *</label>
+              <input type="tel" placeholder="10 digit mobile" style="width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #d4af37; color: #b0b0b0; border-radius: 4px;">
+            </div>
+          </div>
+          <div>
+            <label style="display: block; color: #d4af37; font-weight: 700; margin-bottom: 8px; font-size: 12px; text-transform: uppercase;">Email Address</label>
+            <input type="email" placeholder="your@email.com" style="width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #d4af37; color: #b0b0b0; border-radius: 4px;">
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+            <div>
+              <label style="display: block; color: #d4af37; font-weight: 700; margin-bottom: 8px; font-size: 12px; text-transform: uppercase;">Course Interested In</label>
+              <select style="width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #d4af37; color: #b0b0b0; border-radius: 4px;">
+                <option>LL.B. Entrance</option>
+                <option>LL.B. – 3 Years</option>
+                <option>LL.B. – 5 Years</option>
+                <option>LL.M.</option>
+                <option>Judiciary Exam</option>
+              </select>
+            </div>
+            <div>
+              <label style="display: block; color: #d4af37; font-weight: 700; margin-bottom: 8px; font-size: 12px; text-transform: uppercase;">Preferred Mode</label>
+              <select style="width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #d4af37; color: #b0b0b0; border-radius: 4px;">
+                <option>Online</option>
+                <option>Offline</option>
+                <option>Both</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label style="display: block; color: #d4af37; font-weight: 700; margin-bottom: 8px; font-size: 12px; text-transform: uppercase;">Message</label>
+            <textarea placeholder="Your inquiry..." style="width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #d4af37; color: #b0b0b0; border-radius: 4px; resize: vertical; min-height: 100px;"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="margin-top: 10px;">Send Enquiry →</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact Section -->
+  <div style="background: #1a1a1a; padding: 50px 20px; border-bottom: 1px solid #d4af37;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+      <h2 class="section-title">Get in Touch</h2>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start;">
+        <div>
+          <div style="background: #0f0f0f; padding: 25px; border: 1px solid #d4af37; border-radius: 8px; margin-bottom: 20px;">
+            <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+              <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #000; font-weight: 700;">📍</div>
+              <div>
+                <p style="color: #d4af37; font-weight: 700; margin: 0 0 4px 0; font-size: 12px; text-transform: uppercase;">Address</p>
+                <p style="color: #b0b0b0; margin: 0; font-size: 13px;">New Delhi, India</p>
+              </div>
+            </div>
+            <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+              <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #000; font-weight: 700;">📞</div>
+              <div>
+                <p style="color: #d4af37; font-weight: 700; margin: 0 0 4px 0; font-size: 12px; text-transform: uppercase;">Phone</p>
+                <a href="tel:+919876543210" style="color: #b0b0b0; font-size: 13px;">+91 9876543210</a>
+              </div>
+            </div>
+            <div style="display: flex; gap: 15px;">
+              <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #000; font-weight: 700;">✉️</div>
+              <div>
+                <p style="color: #d4af37; font-weight: 700; margin: 0 0 4px 0; font-size: 12px; text-transform: uppercase;">Email</p>
+                <a href="mailto:info@lawstudents.com" style="color: #b0b0b0; font-size: 13px;">info@lawstudents.com</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="background: #0f0f0f; padding: 25px; border: 1px solid #d4af37; border-radius: 8px;">
+          <form style="display: flex; flex-direction: column; gap: 12px;">
+            <input type="text" placeholder="Your Name" style="padding: 10px; background: #1a1a1a; border: 1px solid #d4af37; color: #b0b0b0; border-radius: 4px;">
+            <input type="email" placeholder="Email" style="padding: 10px; background: #1a1a1a; border: 1px solid #d4af37; color: #b0b0b0; border-radius: 4px;">
+            <input type="tel" placeholder="Phone" style="padding: 10px; background: #1a1a1a; border: 1px solid #d4af37; color: #b0b0b0; border-radius: 4px;">
+            <textarea placeholder="Your Message" style="padding: 10px; background: #1a1a1a; border: 1px solid #d4af37; color: #b0b0b0; border-radius: 4px; resize: vertical; min-height: 80px;"></textarea>
+            <button type="submit" class="btn btn-primary">Send Message →</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+</section>
+
+<!-- About Page -->
+<section data-screen-label="02" style="background: #0f0f0f; min-height: 100vh; padding-top: 80px;">
+  <header class="header">
+    <div class="logo-section">
+      <img src="./logo-full.png" alt="Law Students">
+      <span class="logo-text">LAW STUDENTS</span>
+    </div>
+  </header>
+
+  <div style="padding: 50px 20px;">
+    <!-- Hero Section -->
+    <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%); padding: 40px 20px; text-align: center; border-bottom: 1px solid #d4af37; margin-bottom: 50px;">
+      <h2 style="font-size: 36px; color: #d4af37; margin: 0 0 10px 0; font-weight: 700;">About Law Students</h2>
+      <p style="color: #b0b0b0; font-size: 15px; margin: 0; line-height: 1.6;">Empowering legal professionals since 2017</p>
+    </div>
+
+    <div style="max-width: 1000px; margin: 0 auto;">
+      <!-- Mission Section -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; margin-bottom: 60px;">
+        <div>
+          <h3 style="color: #d4af37; margin: 0 0 15px 0; font-size: 28px; font-weight: 700;">Our Mission</h3>
+          <p style="color: #b0b0b0; line-height: 1.8; font-size: 14px; margin: 0 0 15px 0;">Law Students was created to empower aspiring legal professionals with practical knowledge, expert guidance, and comprehensive resources to build successful careers in law.</p>
+          <p style="color: #b0b0b0; line-height: 1.8; font-size: 14px; margin: 0;">We combine theoretical insights with practical case studies, mentorship programs, and interactive sessions, ensuring students are confident and well-prepared for real-world legal environments.</p>
+          <div style="margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div style="padding: 12px; background: #1a1a1a; border-left: 3px solid #d4af37; border-radius: 4px;">
+              <p style="color: #d4af37; font-weight: 700; margin: 0; font-size: 12px; text-transform: uppercase;">✓ Expert Instructors</p>
+            </div>
+            <div style="padding: 12px; background: #1a1a1a; border-left: 3px solid #d4af37; border-radius: 4px;">
+              <p style="color: #d4af37; font-weight: 700; margin: 0; font-size: 12px; text-transform: uppercase;">✓ Comprehensive</p>
+            </div>
+            <div style="padding: 12px; background: #1a1a1a; border-left: 3px solid #d4af37; border-radius: 4px;">
+              <p style="color: #d4af37; font-weight: 700; margin: 0; font-size: 12px; text-transform: uppercase;">✓ Practical Learning</p>
+            </div>
+            <div style="padding: 12px; background: #1a1a1a; border-left: 3px solid #d4af37; border-radius: 4px;">
+              <p style="color: #d4af37; font-weight: 700; margin: 0; font-size: 12px; text-transform: uppercase;">✓ Career Support</p>
+            </div>
+          </div>
+        </div>
+        <div style="background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); border-radius: 8px; padding: 40px; text-align: center; display: flex; align-items: center; justify-content: center; min-height: 300px; color: #000;">
+          <div>
+            <div style="font-size: 48px; margin-bottom: 15px;">⚖️</div>
+            <p style="margin: 0; font-size: 14px; font-weight: 700;">Empowering Legal Professionals Since 2017</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats Section -->
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 60px;">
+        <div style="padding: 25px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); border-radius: 8px; text-align: center;">
+          <div style="font-size: 36px; font-weight: 700; color: #000;">10+</div>
+          <p style="color: #000; margin: 8px 0 0 0; font-weight: 700; font-size: 12px; text-transform: uppercase;">Years</p>
+        </div>
+        <div style="padding: 25px; background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; text-align: center;">
+          <div style="font-size: 36px; font-weight: 700; color: #d4af37;">5000+</div>
+          <p style="color: #b0b0b0; margin: 8px 0 0 0; font-weight: 700; font-size: 12px; text-transform: uppercase;">Students</p>
+        </div>
+        <div style="padding: 25px; background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; text-align: center;">
+          <div style="font-size: 36px; font-weight: 700; color: #d4af37;">50+</div>
+          <p style="color: #b0b0b0; margin: 8px 0 0 0; font-weight: 700; font-size: 12px; text-transform: uppercase;">Courses</p>
+        </div>
+        <div style="padding: 25px; background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; text-align: center;">
+          <div style="font-size: 36px; font-weight: 700; color: #d4af37;">50+</div>
+          <p style="color: #b0b0b0; margin: 8px 0 0 0; font-weight: 700; font-size: 12px; text-transform: uppercase;">Instructors</p>
+        </div>
+      </div>
+
+      <!-- Journey Timeline -->
+      <div style="margin-bottom: 60px;">
+        <h3 style="color: #d4af37; margin: 0 0 30px 0; font-size: 28px; font-weight: 700; text-align: center;">Our Journey</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;">
+          <div style="padding: 15px; background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; text-align: center;">
+            <h4 style="color: #d4af37; margin: 0 0 6px 0; font-size: 16px; font-weight: 700;">2017</h4>
+            <p style="color: #b0b0b0; font-size: 11px; margin: 0; line-height: 1.4;">Platform Founded</p>
+          </div>
+          <div style="padding: 15px; background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; text-align: center;">
+            <h4 style="color: #d4af37; margin: 0 0 6px 0; font-size: 16px; font-weight: 700;">2018</h4>
+            <p style="color: #b0b0b0; font-size: 11px; margin: 0; line-height: 1.4;">Curriculum Expansion</p>
+          </div>
+          <div style="padding: 15px; background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; text-align: center;">
+            <h4 style="color: #d4af37; margin: 0 0 6px 0; font-size: 16px; font-weight: 700;">2019</h4>
+            <p style="color: #b0b0b0; font-size: 11px; margin: 0; line-height: 1.4;">Online Launch</p>
+          </div>
+          <div style="padding: 15px; background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; text-align: center;">
+            <h4 style="color: #d4af37; margin: 0 0 6px 0; font-size: 16px; font-weight: 700;">2020</h4>
+            <p style="color: #b0b0b0; font-size: 11px; margin: 0; line-height: 1.4;">Career Support</p>
+          </div>
+          <div style="padding: 15px; background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; text-align: center;">
+            <h4 style="color: #d4af37; margin: 0 0 6px 0; font-size: 16px; font-weight: 700;">2021</h4>
+            <p style="color: #b0b0b0; font-size: 11px; margin: 0; line-height: 1.4;">Global Expansion</p>
+          </div>
+          <div style="padding: 15px; background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; text-align: center;">
+            <h4 style="color: #d4af37; margin: 0 0 6px 0; font-size: 16px; font-weight: 700;">2023</h4>
+            <p style="color: #b0b0b0; font-size: 11px; margin: 0; line-height: 1.4;">AI Integration</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Instructors Section -->
+      <div>
+        <h3 style="color: #d4af37; margin: 0 0 30px 0; font-size: 28px; font-weight: 700; text-align: center;">Meet Our Instructors</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px;">
+          <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; overflow: hidden; text-align: center;">
+            <div style="width: 100%; height: 140px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); display: flex; align-items: center; justify-content: center; font-size: 48px;">👨‍⚖️</div>
+            <div style="padding: 15px;">
+              <h4 style="color: #d4af37; margin: 0 0 4px 0; font-size: 14px; font-weight: 700;">Alex Ferguson</h4>
+              <p style="color: #b0b0b0; margin: 0; font-size: 12px;">Criminal Law</p>
+            </div>
+          </div>
+          <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; overflow: hidden; text-align: center;">
+            <div style="width: 100%; height: 140px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); display: flex; align-items: center; justify-content: center; font-size: 48px;">👨‍💼</div>
+            <div style="padding: 15px;">
+              <h4 style="color: #d4af37; margin: 0 0 4px 0; font-size: 14px; font-weight: 700;">Richard Stones</h4>
+              <p style="color: #b0b0b0; margin: 0; font-size: 12px;">Corporate Law</p>
+            </div>
+          </div>
+          <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; overflow: hidden; text-align: center;">
+            <div style="width: 100%; height: 140px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); display: flex; align-items: center; justify-content: center; font-size: 48px;">👨‍💻</div>
+            <div style="padding: 15px;">
+              <h4 style="color: #d4af37; margin: 0 0 4px 0; font-size: 14px; font-weight: 700;">Pep Guardiola</h4>
+              <p style="color: #b0b0b0; margin: 0; font-size: 12px;">Tax &amp; Compliance</p>
+            </div>
+          </div>
+          <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; overflow: hidden; text-align: center;">
+            <div style="width: 100%; height: 140px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); display: flex; align-items: center; justify-content: center; font-size: 48px;">👩‍⚖️</div>
+            <div style="padding: 15px;">
+              <h4 style="color: #d4af37; margin: 0 0 4px 0; font-size: 14px; font-weight: 700;">Samantha Lee</h4>
+              <p style="color: #b0b0b0; margin: 0; font-size: 12px;">Civil Law</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#courses">Courses</a></li>
+          <li><a href="#acts">Bare Acts</a></li>
+          <li><a href="#rules">Rules</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#knowledge">Legal Knowledge</a></li>
+          <li><a href="#copys">Study Notes</a></li>
+          <li><a href="#exams">Government Exams</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="#contact">Contact Us</a></li>
+          <li><a href="#clientele">Our Clientele</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms &amp; Conditions</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2024 Law Students. All rights reserved. | Empowering Legal Education</p>
+    </div>
+  </footer>
+</section>
+
+<!-- Courses Page -->
+<section data-screen-label="03" style="background: #0f0f0f; min-height: 100vh; padding-top: 80px;">
+  <header class="header">
+    <div class="logo-section">
+      <img src="./logo-full.png" alt="Law Students">
+      <span class="logo-text">LAW STUDENTS</span>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%); padding: 40px 20px; text-align: center; border-bottom: 1px solid #d4af37;">
+    <h1 style="font-size: 36px; color: #d4af37; margin: 0;">Our Courses</h1>
+    <p style="color: #b0b0b0; font-size: 15px; margin: 10px 0 0 0;">Professional legal education programs for all levels</p>
+  </div>
+
+  <div style="padding: 50px 20px;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+      <!-- Search & Filter Section -->
+      <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%); padding: 30px; border: 2px solid #d4af37; border-radius: 8px; margin-bottom: 40px;">
+        <h3 style="color: #d4af37; margin: 0 0 20px 0; font-size: 20px; font-weight: 700; text-align: center;">Find Your Course</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+          <div>
+            <label style="display: block; color: #d4af37; font-weight: 700; margin-bottom: 8px; font-size: 12px; text-transform: uppercase;">Category</label>
+            <select style="width: 100%; padding: 12px; background: #0f0f0f; border: 1px solid #d4af37; color: #b0b0b0; border-radius: 4px;">
+              <option>All Categories</option>
+              <option>LL.B. Entrance</option>
+              <option>LL.B. Programs</option>
+              <option>LL.M. Programs</option>
+              <option>Judiciary Exam</option>
+              <option>Bar Council Exam</option>
+            </select>
+          </div>
+          <div>
+            <label style="display: block; color: #d4af37; font-weight: 700; margin-bottom: 8px; font-size: 12px; text-transform: uppercase;">Search Courses</label>
+            <input type="text" placeholder="Search by name or topic..." style="width: 100%; padding: 12px; background: #0f0f0f; border: 1px solid #d4af37; color: #b0b0b0; border-radius: 4px;">
+          </div>
+        </div>
+      </div>
+
+      <!-- Courses Grid -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; margin-bottom: 40px;">
+        <!-- Course 1 -->
+        <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; overflow: hidden; transition: all 0.3s ease;" onmouseover="this.style.boxShadow='0 8px 20px rgba(212, 175, 55, 0.2)'" onmouseout="this.style.boxShadow='none'">
+          <div style="height: 180px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); display: flex; align-items: center; justify-content: center; font-size: 48px;">📚</div>
+          <div style="padding: 20px;">
+            <h4 style="color: #d4af37; margin: 0 0 12px 0; font-size: 16px; font-weight: 700;">LL.B. Entrance Exam</h4>
+            <p style="color: #b0b0b0; font-size: 13px; margin: 0 0 15px 0; line-height: 1.5;">Complete preparation for Law degree entrance examinations</p>
+            <div style="margin-bottom: 15px;">
+              <span style="color: #d4af37; font-weight: 700; font-size: 14px;">₹ 15,000</span>
+              <span style="color: #b0b0b0; text-decoration: line-through; font-size: 12px; margin-left: 8px;">₹ 20,000</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+              <button class="btn btn-primary" style="padding: 10px; font-size: 12px;">Enroll</button>
+              <button class="btn btn-secondary" style="padding: 10px; font-size: 12px; background: transparent; border: 1px solid #d4af37; color: #d4af37;">Brochure</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Course 2 -->
+        <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; overflow: hidden; transition: all 0.3s ease;" onmouseover="this.style.boxShadow='0 8px 20px rgba(212, 175, 55, 0.2)'" onmouseout="this.style.boxShadow='none'">
+          <div style="height: 180px; background: linear-gradient(135deg, #e6c547 0%, #d4af37 100%); display: flex; align-items: center; justify-content: center; font-size: 48px;">⚖️</div>
+          <div style="padding: 20px;">
+            <h4 style="color: #d4af37; margin: 0 0 12px 0; font-size: 16px; font-weight: 700;">LL.B. 3-Year Program</h4>
+            <p style="color: #b0b0b0; font-size: 13px; margin: 0 0 15px 0; line-height: 1.5;">Professional 3-year law degree program with internships</p>
+            <div style="margin-bottom: 15px;">
+              <span style="color: #d4af37; font-weight: 700; font-size: 14px;">₹ 45,000</span>
+              <span style="color: #b0b0b0; text-decoration: line-through; font-size: 12px; margin-left: 8px;">₹ 60,000</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+              <button class="btn btn-primary" style="padding: 10px; font-size: 12px;">Enroll</button>
+              <button class="btn btn-secondary" style="padding: 10px; font-size: 12px; background: transparent; border: 1px solid #d4af37; color: #d4af37;">Brochure</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Course 3 -->
+        <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; overflow: hidden; transition: all 0.3s ease;" onmouseover="this.style.boxShadow='0 8px 20px rgba(212, 175, 55, 0.2)'" onmouseout="this.style.boxShadow='none'">
+          <div style="height: 180px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); display: flex; align-items: center; justify-content: center; font-size: 48px;">🎓</div>
+          <div style="padding: 20px;">
+            <h4 style="color: #d4af37; margin: 0 0 12px 0; font-size: 16px; font-weight: 700;">LL.B. 5-Year Program</h4>
+            <p style="color: #b0b0b0; font-size: 13px; margin: 0 0 15px 0; line-height: 1.5;">Comprehensive 5-year integrated law degree program</p>
+            <div style="margin-bottom: 15px;">
+              <span style="color: #d4af37; font-weight: 700; font-size: 14px;">₹ 60,000</span>
+              <span style="color: #b0b0b0; text-decoration: line-through; font-size: 12px; margin-left: 8px;">₹ 80,000</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+              <button class="btn btn-primary" style="padding: 10px; font-size: 12px;">Enroll</button>
+              <button class="btn btn-secondary" style="padding: 10px; font-size: 12px; background: transparent; border: 1px solid #d4af37; color: #d4af37;">Brochure</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Course 4 -->
+        <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; overflow: hidden; transition: all 0.3s ease;" onmouseover="this.style.boxShadow='0 8px 20px rgba(212, 175, 55, 0.2)'" onmouseout="this.style.boxShadow='none'">
+          <div style="height: 180px; background: linear-gradient(135deg, #e6c547 0%, #d4af37 100%); display: flex; align-items: center; justify-content: center; font-size: 48px;">📖</div>
+          <div style="padding: 20px;">
+            <h4 style="color: #d4af37; margin: 0 0 12px 0; font-size: 16px; font-weight: 700;">LL.M. Program</h4>
+            <p style="color: #b0b0b0; font-size: 13px; margin: 0 0 15px 0; line-height: 1.5;">Specialized Master of Laws program for graduates</p>
+            <div style="margin-bottom: 15px;">
+              <span style="color: #d4af37; font-weight: 700; font-size: 14px;">₹ 35,000</span>
+              <span style="color: #b0b0b0; text-decoration: line-through; font-size: 12px; margin-left: 8px;">₹ 50,000</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+              <button class="btn btn-primary" style="padding: 10px; font-size: 12px;">Enroll</button>
+              <button class="btn btn-secondary" style="padding: 10px; font-size: 12px; background: transparent; border: 1px solid #d4af37; color: #d4af37;">Brochure</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Course 5 -->
+        <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; overflow: hidden; transition: all 0.3s ease;" onmouseover="this.style.boxShadow='0 8px 20px rgba(212, 175, 55, 0.2)'" onmouseout="this.style.boxShadow='none'">
+          <div style="height: 180px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); display: flex; align-items: center; justify-content: center; font-size: 48px;">⚔️</div>
+          <div style="padding: 20px;">
+            <h4 style="color: #d4af37; margin: 0 0 12px 0; font-size: 16px; font-weight: 700;">Judiciary Exam Prep</h4>
+            <p style="color: #b0b0b0; font-size: 13px; margin: 0 0 15px 0; line-height: 1.5;">Dedicated preparation for judicial service exams</p>
+            <div style="margin-bottom: 15px;">
+              <span style="color: #d4af37; font-weight: 700; font-size: 14px;">₹ 25,000</span>
+              <span style="color: #b0b0b0; text-decoration: line-through; font-size: 12px; margin-left: 8px;">₹ 35,000</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+              <button class="btn btn-primary" style="padding: 10px; font-size: 12px;">Enroll</button>
+              <button class="btn btn-secondary" style="padding: 10px; font-size: 12px; background: transparent; border: 1px solid #d4af37; color: #d4af37;">Brochure</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Course 6 -->
+        <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; overflow: hidden; transition: all 0.3s ease;" onmouseover="this.style.boxShadow='0 8px 20px rgba(212, 175, 55, 0.2)'" onmouseout="this.style.boxShadow='none'">
+          <div style="height: 180px; background: linear-gradient(135deg, #e6c547 0%, #d4af37 100%); display: flex; align-items: center; justify-content: center; font-size: 48px;">🏛️</div>
+          <div style="padding: 20px;">
+            <h4 style="color: #d4af37; margin: 0 0 12px 0; font-size: 16px; font-weight: 700;">Bar Council Exam Prep</h4>
+            <p style="color: #b0b0b0; font-size: 13px; margin: 0 0 15px 0; line-height: 1.5;">Comprehensive Bar Council examination preparation</p>
+            <div style="margin-bottom: 15px;">
+              <span style="color: #d4af37; font-weight: 700; font-size: 14px;">₹ 20,000</span>
+              <span style="color: #b0b0b0; text-decoration: line-through; font-size: 12px; margin-left: 8px;">₹ 30,000</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+              <button class="btn btn-primary" style="padding: 10px; font-size: 12px;">Enroll</button>
+              <button class="btn btn-secondary" style="padding: 10px; font-size: 12px; background: transparent; border: 1px solid #d4af37; color: #d4af37;">Brochure</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Course Features -->
+      <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%); padding: 40px; border: 2px solid #d4af37; border-radius: 8px; margin-top: 40px;">
+        <h3 style="color: #d4af37; margin: 0 0 30px 0; font-size: 24px; font-weight: 700; text-align: center;">What You Get in Every Course</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+          <div style="text-align: center;">
+            <div style="font-size: 32px; margin-bottom: 12px;">🎥</div>
+            <p style="color: #d4af37; font-weight: 700; margin: 0 0 8px 0;">Video Lectures</p>
+            <p style="color: #b0b0b0; font-size: 13px; margin: 0;">Expert instructors teaching all topics</p>
+          </div>
+          <div style="text-align: center;">
+            <div style="font-size: 32px; margin-bottom: 12px;">📚</div>
+            <p style="color: #d4af37; font-weight: 700; margin: 0 0 8px 0;">Study Materials</p>
+            <p style="color: #b0b0b0; font-size: 13px; margin: 0;">Complete notes and references</p>
+          </div>
+          <div style="text-align: center;">
+            <div style="font-size: 32px; margin-bottom: 12px;">✍️</div>
+            <p style="color: #d4af37; font-weight: 700; margin: 0 0 8px 0;">Mock Tests</p>
+            <p style="color: #b0b0b0; font-size: 13px; margin: 0;">Practice tests and exams</p>
+          </div>
+          <div style="text-align: center;">
+            <div style="font-size: 32px; margin-bottom: 12px;">🎓</div>
+            <p style="color: #d4af37; font-weight: 700; margin: 0 0 8px 0;">Mentorship</p>
+            <p style="color: #b0b0b0; font-size: 13px; margin: 0;">One-on-one doubt clearing</p>
+          </div>
+          <div style="text-align: center;">
+            <div style="font-size: 32px; margin-bottom: 12px;">📊</div>
+            <p style="color: #d4af37; font-weight: 700; margin: 0 0 8px 0;">Performance Analytics</p>
+            <p style="color: #b0b0b0; font-size: 13px; margin: 0;">Track your progress</p>
+          </div>
+          <div style="text-align: center;">
+            <div style="font-size: 32px; margin-bottom: 12px;">♾️</div>
+            <p style="color: #d4af37; font-weight: 700; margin: 0 0 8px 0;">Lifetime Access</p>
+            <p style="color: #b0b0b0; font-size: 13px; margin: 0;">Learn at your own pace</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#courses">Courses</a></li>
+          <li><a href="#acts">Bare Acts</a></li>
+          <li><a href="#rules">Rules</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#knowledge">Legal Knowledge</a></li>
+          <li><a href="#copys">Study Notes</a></li>
+          <li><a href="#exams">Government Exams</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="#contact">Contact Us</a></li>
+          <li><a href="#clientele">Our Clientele</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms &amp; Conditions</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2024 Law Students. All rights reserved. | Empowering Legal Education</p>
+    </div>
+  </footer>
+</section>
+
+<!-- Bare Acts Page -->
+<section data-screen-label="04" style="background: #0f0f0f; min-height: 100vh;">
+  <header class="header">
+    <div class="logo-section">
+      <img src="./logo-full.png" alt="Law Students">
+      <span class="logo-text">LAW STUDENTS</span>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%); padding: 40px 20px; text-align: center; border-bottom: 1px solid #d4af37;">
+    <h1 style="font-size: 36px; color: #d4af37; margin: 0;">Bare Acts &amp; Legislation</h1>
+    <p style="color: #b0b0b0; font-size: 15px; margin: 10px 0 0 0;">Complete access to Indian legal statutes and acts</p>
+  </div>
+
+  <div style="padding: 50px 20px;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+      <!-- Search & Filter Section -->
+      <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%); padding: 30px; border: 2px solid #d4af37; border-radius: 8px; margin-bottom: 40px;">
+        <h3 style="color: #d4af37; margin: 0 0 20px 0; font-size: 20px; font-weight: 700; text-align: center;">Find Your Act</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+          <div>
+            <label style="display: block; color: #d4af37; font-weight: 700; margin-bottom: 8px; font-size: 12px; text-transform: uppercase;">Category</label>
+            <select style="width: 100%; padding: 12px; background: #0f0f0f; border: 1px solid #d4af37; color: #b0b0b0; border-radius: 4px;">
+              <option>All Categories</option>
+              <option>Constitutional</option>
+              <option>Criminal</option>
+              <option>Civil</option>
+              <option>Commercial</option>
+            </select>
+          </div>
+          <div>
+            <label style="display: block; color: #d4af37; font-weight: 700; margin-bottom: 8px; font-size: 12px; text-transform: uppercase;">Search Acts</label>
+            <input type="text" placeholder="Search by name or section..." style="width: 100%; padding: 12px; background: #0f0f0f; border: 1px solid #d4af37; color: #b0b0b0; border-radius: 4px;">
+          </div>
+        </div>
+      </div>
+
+      <!-- Acts Categories -->
+      <div style="display: grid; gap: 20px;">
+        <!-- Constitutional Acts -->
+        <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; overflow: hidden;">
+          <div style="padding: 20px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); color: #000; font-weight: 700; cursor: pointer;">
+            📖 Constitutional Acts
+          </div>
+          <div style="padding: 20px; background: #0f0f0f;">
+            <div style="margin-bottom: 15px; padding: 15px; background: #1a1a1a; border-left: 3px solid #d4af37; border-radius: 4px;">
+              <p style="color: #d4af37; font-weight: 700; margin: 0 0 8px 0; font-size: 14px;">Constitution of India</p>
+              <p style="color: #b0b0b0; font-size: 13px; margin: 0;">Complete text with articles, schedules &amp; amendments</p>
+            </div>
+            <div style="margin-bottom: 15px; padding: 15px; background: #1a1a1a; border-left: 3px solid #d4af37; border-radius: 4px;">
+              <p style="color: #d4af37; font-weight: 700; margin: 0 0 8px 0; font-size: 14px;">Representation of the People Act, 1951</p>
+              <p style="color: #b0b0b0; font-size: 13px; margin: 0;">Electoral law and voting rights</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Criminal Acts -->
+        <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; overflow: hidden;">
+          <div style="padding: 20px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); color: #000; font-weight: 700; cursor: pointer;">
+            ⚖️ Criminal Acts
+          </div>
+          <div style="padding: 20px; background: #0f0f0f;">
+            <div style="margin-bottom: 15px; padding: 15px; background: #1a1a1a; border-left: 3px solid #d4af37; border-radius: 4px;">
+              <p style="color: #d4af37; font-weight: 700; margin: 0 0 8px 0; font-size: 14px;">Indian Penal Code, 1860</p>
+              <p style="color: #b0b0b0; font-size: 13px; margin: 0;">Substantive criminal law covering all offenses</p>
+            </div>
+            <div style="margin-bottom: 15px; padding: 15px; background: #1a1a1a; border-left: 3px solid #d4af37; border-radius: 4px;">
+              <p style="color: #d4af37; font-weight: 700; margin: 0 0 8px 0; font-size: 14px;">Criminal Procedure Code, 1973</p>
+              <p style="color: #b0b0b0; font-size: 13px; margin: 0;">Procedural law for criminal trials and investigations</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Civil Acts -->
+        <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; overflow: hidden;">
+          <div style="padding: 20px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); color: #000; font-weight: 700; cursor: pointer;">
+            📋 Civil Acts
+          </div>
+          <div style="padding: 20px; background: #0f0f0f;">
+            <div style="margin-bottom: 15px; padding: 15px; background: #1a1a1a; border-left: 3px solid #d4af37; border-radius: 4px;">
+              <p style="color: #d4af37; font-weight: 700; margin: 0 0 8px 0; font-size: 14px;">Civil Procedure Code, 1908</p>
+              <p style="color: #b0b0b0; font-size: 13px; margin: 0;">Rules and procedures for civil disputes</p>
+            </div>
+            <div style="margin-bottom: 15px; padding: 15px; background: #1a1a1a; border-left: 3px solid #d4af37; border-radius: 4px;">
+              <p style="color: #d4af37; font-weight: 700; margin: 0 0 8px 0; font-size: 14px;">Indian Contract Act, 1872</p>
+              <p style="color: #b0b0b0; font-size: 13px; margin: 0;">Law governing contracts and agreements</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Commercial Acts -->
+        <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; overflow: hidden;">
+          <div style="padding: 20px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); color: #000; font-weight: 700; cursor: pointer;">
+            💼 Commercial Acts
+          </div>
+          <div style="padding: 20px; background: #0f0f0f;">
+            <div style="margin-bottom: 15px; padding: 15px; background: #1a1a1a; border-left: 3px solid #d4af37; border-radius: 4px;">
+              <p style="color: #d4af37; font-weight: 700; margin: 0 0 8px 0; font-size: 14px;">Companies Act, 2013</p>
+              <p style="color: #b0b0b0; font-size: 13px; margin: 0;">Corporate governance and company law</p>
+            </div>
+            <div style="margin-bottom: 15px; padding: 15px; background: #1a1a1a; border-left: 3px solid #d4af37; border-radius: 4px;">
+              <p style="color: #d4af37; font-weight: 700; margin: 0 0 8px 0; font-size: 14px;">Negotiable Instruments Act, 1881</p>
+              <p style="color: #b0b0b0; font-size: 13px; margin: 0;">Cheques, promissory notes and bills of exchange</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#courses">Courses</a></li>
+          <li><a href="#acts">Bare Acts</a></li>
+          <li><a href="#rules">Rules</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#knowledge">Legal Knowledge</a></li>
+          <li><a href="#copys">Study Notes</a></li>
+          <li><a href="#exams">Government Exams</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="#contact">Contact Us</a></li>
+          <li><a href="#clientele">Our Clientele</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms &amp; Conditions</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2024 Law Students. All rights reserved. | Empowering Legal Education</p>
+    </div>
+  </footer>
+</section>
+
+<!-- Study Materials Page -->
+<section data-screen-label="05" style="background: #0f0f0f; min-height: 100vh; padding-top: 80px;">
+  <header class="header">
+    <div class="logo-section">
+      <img src="./logo-full.png" alt="Law Students">
+      <span class="logo-text">LAW STUDENTS</span>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%); padding: 40px 20px; text-align: center; border-bottom: 1px solid #d4af37;">
+    <h1 style="font-size: 36px; color: #d4af37; margin: 0;">Study Materials &amp; Notes</h1>
+    <p style="color: #b0b0b0; font-size: 15px; margin: 10px 0 0 0;">Free study notes, legal materials, and exam preparation resources</p>
+  </div>
+
+  <div style="padding: 50px 20px;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+      <!-- Search & Filter Section -->
+      <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%); padding: 30px; border: 2px solid #d4af37; border-radius: 8px; margin-bottom: 40px;">
+        <h3 style="color: #d4af37; margin: 0 0 20px 0; font-size: 20px; font-weight: 700; text-align: center;">Find Study Materials</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+          <div>
+            <label style="display: block; color: #d4af37; font-weight: 700; margin-bottom: 8px; font-size: 12px; text-transform: uppercase;">Category</label>
+            <select style="width: 100%; padding: 12px; background: #0f0f0f; border: 1px solid #d4af37; color: #b0b0b0; border-radius: 4px;">
+              <option>All Categories</option>
+              <option>Constitutional Law</option>
+              <option>Criminal Law</option>
+              <option>Civil Law</option>
+              <option>Corporate Law</option>
+              <option>Family Law</option>
+            </select>
+          </div>
+          <div>
+            <label style="display: block; color: #d4af37; font-weight: 700; margin-bottom: 8px; font-size: 12px; text-transform: uppercase;">Search Notes</label>
+            <input type="text" placeholder="Search by topic or subject..." style="width: 100%; padding: 12px; background: #0f0f0f; border: 1px solid #d4af37; color: #b0b0b0; border-radius: 4px;">
+          </div>
+        </div>
+      </div>
+
+      <!-- Featured Materials Grid -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 50px;">
+        <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; padding: 20px; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.boxShadow='0 8px 20px rgba(212, 175, 55, 0.2)'" onmouseout="this.style.boxShadow='none'">
+          <div style="height: 120px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 36px; margin-bottom: 15px;">📚</div>
+          <h4 style="color: #d4af37; margin: 0 0 8px 0; font-size: 14px; font-weight: 700;">Constitutional Law Notes</h4>
+          <p style="color: #b0b0b0; font-size: 12px; margin: 0 0 12px 0;">Complete study material on Constitutional provisions</p>
+          <button style="width: 100%; padding: 8px; background: #d4af37; color: #000; border: none; border-radius: 4px; font-weight: 700; font-size: 12px; cursor: pointer;">Download →</button>
+        </div>
+        <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; padding: 20px; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.boxShadow='0 8px 20px rgba(212, 175, 55, 0.2)'" onmouseout="this.style.boxShadow='none'">
+          <div style="height: 120px; background: linear-gradient(135deg, #e6c547 0%, #d4af37 100%); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 36px; margin-bottom: 15px;">⚖️</div>
+          <h4 style="color: #d4af37; margin: 0 0 8px 0; font-size: 14px; font-weight: 700;">IPC Sections Guide</h4>
+          <p style="color: #b0b0b0; font-size: 12px; margin: 0 0 12px 0;">Detailed explanations of all IPC sections</p>
+          <button style="width: 100%; padding: 8px; background: #d4af37; color: #000; border: none; border-radius: 4px; font-weight: 700; font-size: 12px; cursor: pointer;">Download →</button>
+        </div>
+        <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; padding: 20px; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.boxShadow='0 8px 20px rgba(212, 175, 55, 0.2)'" onmouseout="this.style.boxShadow='none'">
+          <div style="height: 120px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 36px; margin-bottom: 15px;">📋</div>
+          <h4 style="color: #d4af37; margin: 0 0 8px 0; font-size: 14px; font-weight: 700;">CPC Procedure</h4>
+          <p style="color: #b0b0b0; font-size: 12px; margin: 0 0 12px 0;">Civil Procedure Code with case references</p>
+          <button style="width: 100%; padding: 8px; background: #d4af37; color: #000; border: none; border-radius: 4px; font-weight: 700; font-size: 12px; cursor: pointer;">Download →</button>
+        </div>
+        <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; padding: 20px; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.boxShadow='0 8px 20px rgba(212, 175, 55, 0.2)'" onmouseout="this.style.boxShadow='none'">
+          <div style="height: 120px; background: linear-gradient(135deg, #e6c547 0%, #d4af37 100%); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 36px; margin-bottom: 15px;">🏢</div>
+          <h4 style="color: #d4af37; margin: 0 0 8px 0; font-size: 14px; font-weight: 700;">Company Law Guide</h4>
+          <p style="color: #b0b0b0; font-size: 12px; margin: 0 0 12px 0;">Companies Act 2013 simplified notes</p>
+          <button style="width: 100%; padding: 8px; background: #d4af37; color: #000; border: none; border-radius: 4px; font-weight: 700; font-size: 12px; cursor: pointer;">Download →</button>
+        </div>
+        <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; padding: 20px; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.boxShadow='0 8px 20px rgba(212, 175, 55, 0.2)'" onmouseout="this.style.boxShadow='none'">
+          <div style="height: 120px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 36px; margin-bottom: 15px;">👨‍⚖️</div>
+          <h4 style="color: #d4af37; margin: 0 0 8px 0; font-size: 14px; font-weight: 700;">Family Law Basics</h4>
+          <p style="color: #b0b0b0; font-size: 12px; margin: 0 0 12px 0;">Marriage, succession and inheritance laws</p>
+          <button style="width: 100%; padding: 8px; background: #d4af37; color: #000; border: none; border-radius: 4px; font-weight: 700; font-size: 12px; cursor: pointer;">Download →</button>
+        </div>
+        <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; padding: 20px; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.boxShadow='0 8px 20px rgba(212, 175, 55, 0.2)'" onmouseout="this.style.boxShadow='none'">
+          <div style="height: 120px; background: linear-gradient(135deg, #e6c547 0%, #d4af37 100%); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 36px; margin-bottom: 15px;">💼</div>
+          <h4 style="color: #d4af37; margin: 0 0 8px 0; font-size: 14px; font-weight: 700;">Labor Law Quick Notes</h4>
+          <p style="color: #b0b0b0; font-size: 12px; margin: 0 0 12px 0;">Employment and labor laws explained</p>
+          <button style="width: 100%; padding: 8px; background: #d4af37; color: #000; border: none; border-radius: 4px; font-weight: 700; font-size: 12px; cursor: pointer;">Download →</button>
+        </div>
+      </div>
+
+      <!-- Library Content -->
+      <div style="margin-bottom: 50px;">
+        <h3 style="color: #d4af37; margin: 0 0 30px 0; font-size: 24px; font-weight: 700; text-align: center;">Knowledge Library</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+          <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; padding: 20px;">
+            <div style="font-size: 28px; margin-bottom: 12px;">📚</div>
+            <h4 style="color: #d4af37; margin: 0 0 8px 0; font-size: 14px; font-weight: 700;">Case Laws</h4>
+            <p style="color: #b0b0b0; font-size: 12px; margin: 0; line-height: 1.5;">Important case laws and judicial precedents</p>
+          </div>
+          <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; padding: 20px;">
+            <div style="font-size: 28px; margin-bottom: 12px;">📖</div>
+            <h4 style="color: #d4af37; margin: 0 0 8px 0; font-size: 14px; font-weight: 700;">Articles</h4>
+            <p style="color: #b0b0b0; font-size: 12px; margin: 0; line-height: 1.5;">Expert articles on various legal topics</p>
+          </div>
+          <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; padding: 20px;">
+            <div style="font-size: 28px; margin-bottom: 12px;">🎓</div>
+            <h4 style="color: #d4af37; margin: 0 0 8px 0; font-size: 14px; font-weight: 700;">Tutorials</h4>
+            <p style="color: #b0b0b0; font-size: 12px; margin: 0; line-height: 1.5;">Step-by-step tutorials on legal topics</p>
+          </div>
+          <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; padding: 20px;">
+            <div style="font-size: 28px; margin-bottom: 12px;">📊</div>
+            <h4 style="color: #d4af37; margin: 0 0 8px 0; font-size: 14px; font-weight: 700;">Model Answers</h4>
+            <p style="color: #b0b0b0; font-size: 12px; margin: 0; line-height: 1.5;">Sample answers for exam questions</p>
+          </div>
+          <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; padding: 20px;">
+            <div style="font-size: 28px; margin-bottom: 12px;">✍️</div>
+            <h4 style="color: #d4af37; margin: 0 0 8px 0; font-size: 14px; font-weight: 700;">Quick Notes</h4>
+            <p style="color: #b0b0b0; font-size: 12px; margin: 0; line-height: 1.5;">Quick reference for revision</p>
+          </div>
+          <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; padding: 20px;">
+            <div style="font-size: 28px; margin-bottom: 12px;">⚡</div>
+            <h4 style="color: #d4af37; margin: 0 0 8px 0; font-size: 14px; font-weight: 700;">Study Guides</h4>
+            <p style="color: #b0b0b0; font-size: 12px; margin: 0; line-height: 1.5;">Comprehensive study guides</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#courses">Courses</a></li>
+          <li><a href="#acts">Bare Acts</a></li>
+          <li><a href="#rules">Rules</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#knowledge">Legal Knowledge</a></li>
+          <li><a href="#copys">Study Notes</a></li>
+          <li><a href="#exams">Government Exams</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="#contact">Contact Us</a></li>
+          <li><a href="#clientele">Our Clientele</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms &amp; Conditions</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2024 Law Students. All rights reserved. | Empowering Legal Education</p>
+    </div>
+  </footer>
+</section>
+
+<!-- Government Exams Page -->
+<section data-screen-label="06" style="background: #0f0f0f; min-height: 100vh; padding-top: 80px;">
+  <header class="header">
+    <div class="logo-section">
+      <img src="./logo-full.png" alt="Law Students">
+      <span class="logo-text">LAW STUDENTS</span>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%); padding: 40px 20px; text-align: center; border-bottom: 1px solid #d4af37;">
+    <h1 style="font-size: 36px; color: #d4af37; margin: 0;">Government Exams &amp; Notifications</h1>
+    <p style="color: #b0b0b0; font-size: 15px; margin: 10px 0 0 0;">Centre &amp; State Government examination notifications and preparation materials</p>
+  </div>
+
+  <div style="padding: 50px 20px;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+      <!-- Search & Filter Section -->
+      <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%); padding: 30px; border: 2px solid #d4af37; border-radius: 8px; margin-bottom: 40px;">
+        <h3 style="color: #d4af37; margin: 0 0 20px 0; font-size: 20px; font-weight: 700; text-align: center;">Find Your Exam Notification</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+          <div>
+            <label style="display: block; color: #d4af37; font-weight: 700; margin-bottom: 8px; font-size: 12px; text-transform: uppercase;">Exam Category</label>
+            <select style="width: 100%; padding: 12px; background: #0f0f0f; border: 1px solid #d4af37; color: #b0b0b0; border-radius: 4px;">
+              <option>All Categories</option>
+              <option>Judiciary Exams</option>
+              <option>UPSC Exams</option>
+              <option>Bar Council Exams</option>
+              <option>State Exams</option>
+            </select>
+          </div>
+          <div>
+            <label style="display: block; color: #d4af37; font-weight: 700; margin-bottom: 8px; font-size: 12px; text-transform: uppercase;">Search Notifications</label>
+            <input type="text" placeholder="Search by exam name or notification..." style="width: 100%; padding: 12px; background: #0f0f0f; border: 1px solid #d4af37; color: #b0b0b0; border-radius: 4px;">
+          </div>
+        </div>
+      </div>
+
+      <!-- Featured Exams -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 50px;">
+        <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; overflow: hidden;">
+          <div style="height: 120px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); display: flex; align-items: center; justify-content: center; font-size: 40px;">🏛️</div>
+          <div style="padding: 20px;">
+            <h4 style="color: #d4af37; margin: 0 0 8px 0; font-size: 16px; font-weight: 700;">Judiciary Exams</h4>
+            <p style="color: #b0b0b0; font-size: 13px; margin: 0 0 12px 0;">District Judge &amp; High Court Judge exam notifications</p>
+            <button style="width: 100%; padding: 8px; background: #d4af37; color: #000; border: none; border-radius: 4px; font-weight: 700; font-size: 12px; cursor: pointer;">View Notifications →</button>
+          </div>
+        </div>
+        <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; overflow: hidden;">
+          <div style="height: 120px; background: linear-gradient(135deg, #e6c547 0%, #d4af37 100%); display: flex; align-items: center; justify-content: center; font-size: 40px;">✍️</div>
+          <div style="padding: 20px;">
+            <h4 style="color: #d4af37; margin: 0 0 8px 0; font-size: 16px; font-weight: 700;">UPSC Exams</h4>
+            <p style="color: #b0b0b0; font-size: 13px; margin: 0 0 12px 0;">IAS, IPS, IFOS and other civil service exams</p>
+            <button style="width: 100%; padding: 8px; background: #d4af37; color: #000; border: none; border-radius: 4px; font-weight: 700; font-size: 12px; cursor: pointer;">View Notifications →</button>
+          </div>
+        </div>
+        <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; overflow: hidden;">
+          <div style="height: 120px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); display: flex; align-items: center; justify-content: center; font-size: 40px;">📝</div>
+          <div style="padding: 20px;">
+            <h4 style="color: #d4af37; margin: 0 0 8px 0; font-size: 16px; font-weight: 700;">All India Bar Exam</h4>
+            <p style="color: #b0b0b0; font-size: 13px; margin: 0 0 12px 0;">Bar Council exam notifications &amp; results</p>
+            <button style="width: 100%; padding: 8px; background: #d4af37; color: #000; border: none; border-radius: 4px; font-weight: 700; font-size: 12px; cursor: pointer;">View Notifications →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Exam Categories -->
+      <div style="display: grid; gap: 20px;">
+        <!-- Judiciary Exams -->
+        <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; overflow: hidden;">
+          <div style="padding: 20px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); color: #000; font-weight: 700; cursor: pointer;">
+            🏛️ Judiciary Exams
+          </div>
+          <div style="padding: 20px; background: #0f0f0f;">
+            <div style="margin-bottom: 15px; padding: 15px; background: #1a1a1a; border-left: 3px solid #d4af37; border-radius: 4px;">
+              <p style="color: #d4af37; font-weight: 700; margin: 0 0 8px 0; font-size: 14px;">District Judge Examination</p>
+              <p style="color: #b0b0b0; font-size: 13px; margin: 0;">Notifications for district judge recruitment across states</p>
+            </div>
+            <div style="margin-bottom: 15px; padding: 15px; background: #1a1a1a; border-left: 3px solid #d4af37; border-radius: 4px;">
+              <p style="color: #d4af37; font-weight: 700; margin: 0 0 8px 0; font-size: 14px;">High Court Judge Examination</p>
+              <p style="color: #b0b0b0; font-size: 13px; margin: 0;">Notifications for high court judge recruitment</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- UPSC Exams -->
+        <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; overflow: hidden;">
+          <div style="padding: 20px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); color: #000; font-weight: 700; cursor: pointer;">
+            ✍️ UPSC Exams
+          </div>
+          <div style="padding: 20px; background: #0f0f0f;">
+            <div style="margin-bottom: 15px; padding: 15px; background: #1a1a1a; border-left: 3px solid #d4af37; border-radius: 4px;">
+              <p style="color: #d4af37; font-weight: 700; margin: 0 0 8px 0; font-size: 14px;">IAS Examination</p>
+              <p style="color: #b0b0b0; font-size: 13px; margin: 0;">Union Public Service Commission IAS exam notifications</p>
+            </div>
+            <div style="margin-bottom: 15px; padding: 15px; background: #1a1a1a; border-left: 3px solid #d4af37; border-radius: 4px;">
+              <p style="color: #d4af37; font-weight: 700; margin: 0 0 8px 0; font-size: 14px;">IPS &amp; Other Services</p>
+              <p style="color: #b0b0b0; font-size: 13px; margin: 0;">IPS, IFOS and other civil service examinations</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bar & Legal Exams -->
+        <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; overflow: hidden;">
+          <div style="padding: 20px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); color: #000; font-weight: 700; cursor: pointer;">
+            ⚖️ Legal Profession Exams
+          </div>
+          <div style="padding: 20px; background: #0f0f0f;">
+            <div style="margin-bottom: 15px; padding: 15px; background: #1a1a1a; border-left: 3px solid #d4af37; border-radius: 4px;">
+              <p style="color: #d4af37; font-weight: 700; margin: 0 0 8px 0; font-size: 14px;">All India Bar Examination</p>
+              <p style="color: #b0b0b0; font-size: 13px; margin: 0;">Bar Council exam notifications and schedule</p>
+            </div>
+            <div style="margin-bottom: 15px; padding: 15px; background: #1a1a1a; border-left: 3px solid #d4af37; border-radius: 4px;">
+              <p style="color: #d4af37; font-weight: 700; margin: 0 0 8px 0; font-size: 14px;">State Bar Council Exams</p>
+              <p style="color: #b0b0b0; font-size: 13px; margin: 0;">State-specific bar council exams and notifications</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- State Exams -->
+        <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; overflow: hidden;">
+          <div style="padding: 20px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); color: #000; font-weight: 700; cursor: pointer;">
+            🏢 State Government Exams
+          </div>
+          <div style="padding: 20px; background: #0f0f0f;">
+            <div style="margin-bottom: 15px; padding: 15px; background: #1a1a1a; border-left: 3px solid #d4af37; border-radius: 4px;">
+              <p style="color: #d4af37; font-weight: 700; margin: 0 0 8px 0; font-size: 14px;">State PCS Exams</p>
+              <p style="color: #b0b0b0; font-size: 13px; margin: 0;">State Public Service Commission exams</p>
+            </div>
+            <div style="margin-bottom: 15px; padding: 15px; background: #1a1a1a; border-left: 3px solid #d4af37; border-radius: 4px;">
+              <p style="color: #d4af37; font-weight: 700; margin: 0 0 8px 0; font-size: 14px;">Other State Exams</p>
+              <p style="color: #b0b0b0; font-size: 13px; margin: 0;">Various state-level legal and civil service exams</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Exam Preparation Tips -->
+      <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; padding: 30px; margin-top: 50px; text-align: center;">
+        <h3 style="color: #d4af37; margin: 0 0 25px 0; font-size: 22px; font-weight: 700;">Exam Preparation Resources</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;">
+          <div style="padding: 15px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); color: #000; border-radius: 4px; font-weight: 700; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.boxShadow='0 8px 20px rgba(212, 175, 55, 0.3)'" onmouseout="this.style.boxShadow='none'">📚 Study Notes</div>
+          <div style="padding: 15px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); color: #000; border-radius: 4px; font-weight: 700; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.boxShadow='0 8px 20px rgba(212, 175, 55, 0.3)'" onmouseout="this.style.boxShadow='none'">🎓 Mock Tests</div>
+          <div style="padding: 15px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); color: #000; border-radius: 4px; font-weight: 700; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.boxShadow='0 8px 20px rgba(212, 175, 55, 0.3)'" onmouseout="this.style.boxShadow='none'">📖 Case Studies</div>
+          <div style="padding: 15px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); color: #000; border-radius: 4px; font-weight: 700; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.boxShadow='0 8px 20px rgba(212, 175, 55, 0.3)'" onmouseout="this.style.boxShadow='none'">✍️ Model Answers</div>
+          <div style="padding: 15px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); color: #000; border-radius: 4px; font-weight: 700; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.boxShadow='0 8px 20px rgba(212, 175, 55, 0.3)'" onmouseout="this.style.boxShadow='none'">📋 Practice Papers</div>
+          <div style="padding: 15px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); color: #000; border-radius: 4px; font-weight: 700; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.boxShadow='0 8px 20px rgba(212, 175, 55, 0.3)'" onmouseout="this.style.boxShadow='none'">🎯 Expert Guidance</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#courses">Courses</a></li>
+          <li><a href="#acts">Bare Acts</a></li>
+          <li><a href="#rules">Rules</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#knowledge">Legal Knowledge</a></li>
+          <li><a href="#copys">Study Notes</a></li>
+          <li><a href="#exams">Government Exams</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="#contact">Contact Us</a></li>
+          <li><a href="#clientele">Our Clientele</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms &amp; Conditions</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2024 Law Students. All rights reserved. | Empowering Legal Education</p>
+    </div>
+  </footer>
+</section>
+
+<!-- Gallery Page -->
+<section data-screen-label="07" style="background: #0f0f0f; min-height: 100vh; padding-top: 80px;">
+  <header class="header">
+    <div class="logo-section">
+      <img src="./logo-full.png" alt="Law Students">
+      <span class="logo-text">LAW STUDENTS</span>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%); padding: 40px 20px; text-align: center; border-bottom: 1px solid #d4af37;">
+    <h1 style="font-size: 36px; color: #d4af37; margin: 0;">Gallery</h1>
+    <p style="color: #b0b0b0; font-size: 15px; margin: 10px 0 0 0;">Explore memorable moments from our campus and events</p>
+  </div>
+
+  <div style="padding: 50px 20px;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+      <!-- Filter Section -->
+      <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%); padding: 25px; border: 2px solid #d4af37; border-radius: 8px; margin-bottom: 40px; text-align: center;">
+        <h3 style="color: #d4af37; margin: 0 0 15px 0; font-size: 18px; font-weight: 700;">Filter Gallery</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px;">
+          <button style="padding: 10px; background: #d4af37; color: #000; border: none; border-radius: 4px; font-weight: 700; font-size: 12px; cursor: pointer;">All</button>
+          <button style="padding: 10px; background: transparent; color: #d4af37; border: 2px solid #d4af37; border-radius: 4px; font-weight: 700; font-size: 12px; cursor: pointer;">Events</button>
+          <button style="padding: 10px; background: transparent; color: #d4af37; border: 2px solid #d4af37; border-radius: 4px; font-weight: 700; font-size: 12px; cursor: pointer;">Students</button>
+          <button style="padding: 10px; background: transparent; color: #d4af37; border: 2px solid #d4af37; border-radius: 4px; font-weight: 700; font-size: 12px; cursor: pointer;">Faculty</button>
+          <button style="padding: 10px; background: transparent; color: #d4af37; border: 2px solid #d4af37; border-radius: 4px; font-weight: 700; font-size: 12px; cursor: pointer;">Seminars</button>
+          <button style="padding: 10px; background: transparent; color: #d4af37; border: 2px solid #d4af37; border-radius: 4px; font-weight: 700; font-size: 12px; cursor: pointer;">Awards</button>
+        </div>
+      </div>
+
+      <!-- Gallery Categories -->
+      <div style="display: grid; gap: 40px;">
+        <!-- Events Section -->
+        <div>
+          <h3 style="color: #d4af37; margin: 0 0 20px 0; font-size: 20px; font-weight: 700; border-bottom: 2px solid #d4af37; padding-bottom: 15px;">📸 Events &amp; Seminars</h3>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+            <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; overflow: hidden; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 20px rgba(212, 175, 55, 0.3)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+              <div style="height: 200px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); display: flex; align-items: center; justify-content: center; font-size: 48px;">🎤</div>
+              <div style="padding: 15px;">
+                <p style="color: #d4af37; font-weight: 700; margin: 0 0 5px 0; font-size: 14px;">Guest Lecture Series</p>
+                <p style="color: #b0b0b0; font-size: 12px; margin: 0;">Expert talks and discussions</p>
+              </div>
+            </div>
+            <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; overflow: hidden; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 20px rgba(212, 175, 55, 0.3)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+              <div style="height: 200px; background: linear-gradient(135deg, #e6c547 0%, #d4af37 100%); display: flex; align-items: center; justify-content: center; font-size: 48px;">🏛️</div>
+              <div style="padding: 15px;">
+                <p style="color: #d4af37; font-weight: 700; margin: 0 0 5px 0; font-size: 14px;">Workshop Sessions</p>
+                <p style="color: #b0b0b0; font-size: 12px; margin: 0;">Practical training and skills</p>
+              </div>
+            </div>
+            <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; overflow: hidden; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 20px rgba(212, 175, 55, 0.3)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+              <div style="height: 200px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); display: flex; align-items: center; justify-content: center; font-size: 48px;">🎓</div>
+              <div style="padding: 15px;">
+                <p style="color: #d4af37; font-weight: 700; margin: 0 0 5px 0; font-size: 14px;">Seminars &amp; Webinars</p>
+                <p style="color: #b0b0b0; font-size: 12px; margin: 0;">Online and offline sessions</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Students & Achievement Section -->
+        <div>
+          <h3 style="color: #d4af37; margin: 0 0 20px 0; font-size: 20px; font-weight: 700; border-bottom: 2px solid #d4af37; padding-bottom: 15px;">👥 Students &amp; Achievements</h3>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+            <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; overflow: hidden; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 20px rgba(212, 175, 55, 0.3)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+              <div style="height: 200px; background: linear-gradient(135deg, #e6c547 0%, #d4af37 100%); display: flex; align-items: center; justify-content: center; font-size: 48px;">🏅</div>
+              <div style="padding: 15px;">
+                <p style="color: #d4af37; font-weight: 700; margin: 0 0 5px 0; font-size: 14px;">Award Winners</p>
+                <p style="color: #b0b0b0; font-size: 12px; margin: 0;">Recognition ceremonies</p>
+              </div>
+            </div>
+            <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; overflow: hidden; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 20px rgba(212, 175, 55, 0.3)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+              <div style="height: 200px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); display: flex; align-items: center; justify-content: center; font-size: 48px;">🎓</div>
+              <div style="padding: 15px;">
+                <p style="color: #d4af37; font-weight: 700; margin: 0 0 5px 0; font-size: 14px;">Convocation 2024</p>
+                <p style="color: #b0b0b0; font-size: 12px; margin: 0;">Graduation ceremonies</p>
+              </div>
+            </div>
+            <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; overflow: hidden; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 20px rgba(212, 175, 55, 0.3)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+              <div style="height: 200px; background: linear-gradient(135deg, #e6c547 0%, #d4af37 100%); display: flex; align-items: center; justify-content: center; font-size: 48px;">📚</div>
+              <div style="padding: 15px;">
+                <p style="color: #d4af37; font-weight: 700; margin: 0 0 5px 0; font-size: 14px;">Study Groups</p>
+                <p style="color: #b0b0b0; font-size: 12px; margin: 0;">Student collaborations</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Faculty & Campus Section -->
+        <div>
+          <h3 style="color: #d4af37; margin: 0 0 20px 0; font-size: 20px; font-weight: 700; border-bottom: 2px solid #d4af37; padding-bottom: 15px;">👨‍🏫 Faculty &amp; Campus</h3>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+            <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; overflow: hidden; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 20px rgba(212, 175, 55, 0.3)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+              <div style="height: 200px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); display: flex; align-items: center; justify-content: center; font-size: 48px;">👨‍🎓</div>
+              <div style="padding: 15px;">
+                <p style="color: #d4af37; font-weight: 700; margin: 0 0 5px 0; font-size: 14px;">Faculty Members</p>
+                <p style="color: #b0b0b0; font-size: 12px; margin: 0;">Expert instructors</p>
+              </div>
+            </div>
+            <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; overflow: hidden; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 20px rgba(212, 175, 55, 0.3)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+              <div style="height: 200px; background: linear-gradient(135deg, #e6c547 0%, #d4af37 100%); display: flex; align-items: center; justify-content: center; font-size: 48px;">🏢</div>
+              <div style="padding: 15px;">
+                <p style="color: #d4af37; font-weight: 700; margin: 0 0 5px 0; font-size: 14px;">Campus Views</p>
+                <p style="color: #b0b0b0; font-size: 12px; margin: 0;">Office and facilities</p>
+              </div>
+            </div>
+            <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; overflow: hidden; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 20px rgba(212, 175, 55, 0.3)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+              <div style="height: 200px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); display: flex; align-items: center; justify-content: center; font-size: 48px;">🎯</div>
+              <div style="padding: 15px;">
+                <p style="color: #d4af37; font-weight: 700; margin: 0 0 5px 0; font-size: 14px;">Special Programs</p>
+                <p style="color: #b0b0b0; font-size: 12px; margin: 0;">Unique learning experiences</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#courses">Courses</a></li>
+          <li><a href="#acts">Bare Acts</a></li>
+          <li><a href="#rules">Rules</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#knowledge">Legal Knowledge</a></li>
+          <li><a href="#copys">Study Notes</a></li>
+          <li><a href="#exams">Government Exams</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="#contact">Contact Us</a></li>
+          <li><a href="#clientele">Our Clientele</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms &amp; Conditions</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2024 Law Students. All rights reserved. | Empowering Legal Education</p>
+    </div>
+  </footer>
+</section>
+
+<!-- Rules Page -->
+<section data-screen-label="08" style="background: #0f0f0f; min-height: 100vh;">
+  <header class="header">
+    <div class="logo-section">
+      <img src="./logo-full.png" alt="Law Students">
+      <span class="logo-text">LAW STUDENTS</span>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%); padding: 40px 20px; text-align: center; border-bottom: 1px solid #d4af37;">
+    <h1 style="font-size: 36px; color: #d4af37; margin: 0;">Rules &amp; Regulations</h1>
+    <p style="color: #b0b0b0; font-size: 15px; margin: 10px 0 0 0;">Important rules and procedural regulations for legal practice</p>
+  </div>
+
+  <div style="padding: 50px 20px;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+      <!-- Search & Filter Section -->
+      <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%); padding: 30px; border: 2px solid #d4af37; border-radius: 8px; margin-bottom: 40px;">
+        <h3 style="color: #d4af37; margin: 0 0 20px 0; font-size: 20px; font-weight: 700; text-align: center;">Find Your Rule</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+          <div>
+            <label style="display: block; color: #d4af37; font-weight: 700; margin-bottom: 8px; font-size: 12px; text-transform: uppercase;">Category</label>
+            <select style="width: 100%; padding: 12px; background: #0f0f0f; border: 1px solid #d4af37; color: #b0b0b0; border-radius: 4px;">
+              <option>All Categories</option>
+              <option>Court Rules</option>
+              <option>Bar Council Rules</option>
+              <option>Procedural Rules</option>
+              <option>Professional Ethics</option>
+            </select>
+          </div>
+          <div>
+            <label style="display: block; color: #d4af37; font-weight: 700; margin-bottom: 8px; font-size: 12px; text-transform: uppercase;">Search Rules</label>
+            <input type="text" placeholder="Search by name or section..." style="width: 100%; padding: 12px; background: #0f0f0f; border: 1px solid #d4af37; color: #b0b0b0; border-radius: 4px;">
+          </div>
+        </div>
+      </div>
+
+      <!-- Rules Categories -->
+      <div style="display: grid; gap: 20px;">
+        <!-- Court Rules -->
+        <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; overflow: hidden;">
+          <div style="padding: 20px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); color: #000; font-weight: 700; cursor: pointer;">
+            ⚖️ Court Rules
+          </div>
+          <div style="padding: 20px; background: #0f0f0f;">
+            <div style="margin-bottom: 15px; padding: 15px; background: #1a1a1a; border-left: 3px solid #d4af37; border-radius: 4px;">
+              <p style="color: #d4af37; font-weight: 700; margin: 0 0 8px 0; font-size: 14px;">Supreme Court Rules, 2013</p>
+              <p style="color: #b0b0b0; font-size: 13px; margin: 0;">Rules governing practice before the Supreme Court</p>
+            </div>
+            <div style="margin-bottom: 15px; padding: 15px; background: #1a1a1a; border-left: 3px solid #d4af37; border-radius: 4px;">
+              <p style="color: #d4af37; font-weight: 700; margin: 0 0 8px 0; font-size: 14px;">High Court Rules</p>
+              <p style="color: #b0b0b0; font-size: 13px; margin: 0;">Rules for practice in High Courts across India</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bar Council Rules -->
+        <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; overflow: hidden;">
+          <div style="padding: 20px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); color: #000; font-weight: 700; cursor: pointer;">
+            📋 Bar Council Rules
+          </div>
+          <div style="padding: 20px; background: #0f0f0f;">
+            <div style="margin-bottom: 15px; padding: 15px; background: #1a1a1a; border-left: 3px solid #d4af37; border-radius: 4px;">
+              <p style="color: #d4af37; font-weight: 700; margin: 0 0 8px 0; font-size: 14px;">Bar Council of India Rules</p>
+              <p style="color: #b0b0b0; font-size: 13px; margin: 0;">Standards and rules for legal profession conduct</p>
+            </div>
+            <div style="margin-bottom: 15px; padding: 15px; background: #1a1a1a; border-left: 3px solid #d4af37; border-radius: 4px;">
+              <p style="color: #d4af37; font-weight: 700; margin: 0 0 8px 0; font-size: 14px;">State Bar Council Rules</p>
+              <p style="color: #b0b0b0; font-size: 13px; margin: 0;">State-specific rules and regulations</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Procedural Rules -->
+        <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; overflow: hidden;">
+          <div style="padding: 20px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); color: #000; font-weight: 700; cursor: pointer;">
+            📜 Procedural Rules
+          </div>
+          <div style="padding: 20px; background: #0f0f0f;">
+            <div style="margin-bottom: 15px; padding: 15px; background: #1a1a1a; border-left: 3px solid #d4af37; border-radius: 4px;">
+              <p style="color: #d4af37; font-weight: 700; margin: 0 0 8px 0; font-size: 14px;">Criminal Procedure Rules</p>
+              <p style="color: #b0b0b0; font-size: 13px; margin: 0;">Rules for criminal procedure and practice</p>
+            </div>
+            <div style="margin-bottom: 15px; padding: 15px; background: #1a1a1a; border-left: 3px solid #d4af37; border-radius: 4px;">
+              <p style="color: #d4af37; font-weight: 700; margin: 0 0 8px 0; font-size: 14px;">Civil Procedure Rules</p>
+              <p style="color: #b0b0b0; font-size: 13px; margin: 0;">Rules for civil procedure and practice</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Professional Ethics -->
+        <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; overflow: hidden;">
+          <div style="padding: 20px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); color: #000; font-weight: 700; cursor: pointer;">
+            💼 Professional Ethics
+          </div>
+          <div style="padding: 20px; background: #0f0f0f;">
+            <div style="margin-bottom: 15px; padding: 15px; background: #1a1a1a; border-left: 3px solid #d4af37; border-radius: 4px;">
+              <p style="color: #d4af37; font-weight: 700; margin: 0 0 8px 0; font-size: 14px;">Code of Conduct</p>
+              <p style="color: #b0b0b0; font-size: 13px; margin: 0;">Professional conduct standards for lawyers</p>
+            </div>
+            <div style="margin-bottom: 15px; padding: 15px; background: #1a1a1a; border-left: 3px solid #d4af37; border-radius: 4px;">
+              <p style="color: #d4af37; font-weight: 700; margin: 0 0 8px 0; font-size: 14px;">Rules of Professional Conduct</p>
+              <p style="color: #b0b0b0; font-size: 13px; margin: 0;">Guidelines for ethical legal practice</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-image">📜</div>
+          <div class="card-body">
+            <h3 class="card-title">Bar Council Rules</h3>
+            <p class="card-desc">Bar Council of India regulations and guidelines for legal professionals.</p>
+            <a href="#" class="card-link">Read →</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-image">⚖️</div>
+          <div class="card-body">
+            <h3 class="card-title">Court Rules</h3>
+            <p class="card-desc">Supreme Court and High Court procedural rules.</p>
+            <a href="#" class="card-link">Read →</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-image">📋</div>
+          <div class="card-body">
+            <h3 class="card-title">Practice Rules</h3>
+            <p class="card-desc">Rules of professional conduct and practice standards.</p>
+            <a href="#" class="card-link">Read →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#courses">Courses</a></li>
+          <li><a href="#acts">Bare Acts</a></li>
+          <li><a href="#rules">Rules</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#knowledge">Legal Knowledge</a></li>
+          <li><a href="#copys">Study Notes</a></li>
+          <li><a href="#exams">Government Exams</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="#contact">Contact Us</a></li>
+          <li><a href="#clientele">Our Clientele</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms &amp; Conditions</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2024 Law Students. All rights reserved. | Empowering Legal Education</p>
+    </div>
+  </footer>
+</section>
+
+<!-- Legal Knowledge Page -->
+<section data-screen-label="09" style="background: #0f0f0f; min-height: 100vh; padding-top: 80px;">
+  <header class="header">
+    <div class="logo-section">
+      <img src="./logo-full.png" alt="Law Students">
+      <span class="logo-text">LAW STUDENTS</span>
+    </div>
+  </header>
+
+  <div style="padding: 50px 20px;">
+    <div style="max-width: 900px; margin: 0 auto;">
+      <h2 class="section-title">Legal Knowledge Inquiry</h2>
+      <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%); border: 2px solid #d4af37; padding: 40px; border-radius: 8px;">
+        <form style="display: flex; flex-direction: column; gap: 20px;">
+          <div>
+            <label style="display: block; color: #d4af37; font-weight: 700; margin-bottom: 8px; font-size: 12px; text-transform: uppercase;">Name *</label>
+            <input type="text" placeholder="Your Full Name" style="width: 100%; padding: 12px; background: #0f0f0f; border: 1px solid #d4af37; color: #b0b0b0; border-radius: 4px;">
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+            <div>
+              <label style="display: block; color: #d4af37; font-weight: 700; margin-bottom: 8px; font-size: 12px; text-transform: uppercase;">Email *</label>
+              <input type="email" placeholder="your@email.com" style="width: 100%; padding: 12px; background: #0f0f0f; border: 1px solid #d4af37; color: #b0b0b0; border-radius: 4px;">
+            </div>
+            <div>
+              <label style="display: block; color: #d4af37; font-weight: 700; margin-bottom: 8px; font-size: 12px; text-transform: uppercase;">Mobile *</label>
+              <input type="tel" placeholder="Phone Number" style="width: 100%; padding: 12px; background: #0f0f0f; border: 1px solid #d4af37; color: #b0b0b0; border-radius: 4px;">
+            </div>
+          </div>
+          <div>
+            <label style="display: block; color: #d4af37; font-weight: 700; margin-bottom: 8px; font-size: 12px; text-transform: uppercase;">Subject / Area of Law *</label>
+            <select style="width: 100%; padding: 12px; background: #0f0f0f; border: 1px solid #d4af37; color: #b0b0b0; border-radius: 4px;">
+              <option>Select Category</option>
+              <option>Criminal Law</option>
+              <option>Civil Law</option>
+              <option>Corporate Law</option>
+              <option>Constitutional Law</option>
+            </select>
+          </div>
+          <div>
+            <label style="display: block; color: #d4af37; font-weight: 700; margin-bottom: 8px; font-size: 12px; text-transform: uppercase;">Message *</label>
+            <textarea placeholder="Your inquiry..." style="width: 100%; padding: 12px; background: #0f0f0f; border: 1px solid #d4af37; color: #b0b0b0; border-radius: 4px; resize: vertical; min-height: 120px;"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="margin-top: 10px;">Submit Inquiry →</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#courses">Courses</a></li>
+          <li><a href="#acts">Bare Acts</a></li>
+          <li><a href="#rules">Rules</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#knowledge">Legal Knowledge</a></li>
+          <li><a href="#copys">Study Notes</a></li>
+          <li><a href="#exams">Government Exams</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="#contact">Contact Us</a></li>
+          <li><a href="#clientele">Our Clientele</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms &amp; Conditions</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2024 Law Students. All rights reserved. | Empowering Legal Education</p>
+    </div>
+  </footer>
+</section>
+
+<!-- Study Notes Page -->
+<section data-screen-label="10" style="background: #0f0f0f; min-height: 100vh; padding-top: 80px;">
+  <header class="header">
+    <div class="logo-section">
+      <img src="./logo-full.png" alt="Law Students">
+      <span class="logo-text">LAW STUDENTS</span>
+    </div>
+  </header>
+
+  <div style="padding: 50px 20px;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+      <h2 class="section-title">Free Study Notes &amp; Copybooks</h2>
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-image">📖</div>
+          <div class="card-body">
+            <h3 class="card-title">Constitutional Notes</h3>
+            <p class="card-desc">Complete notes on Indian Constitution with annotations.</p>
+            <a href="#" class="card-link">Download →</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-image">⚖️</div>
+          <div class="card-body">
+            <h3 class="card-title">Criminal Law Notes</h3>
+            <p class="card-desc">IPC and CrPC comprehensive study notes.</p>
+            <a href="#" class="card-link">Download →</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-image">📝</div>
+          <div class="card-body">
+            <h3 class="card-title">Civil Law Notes</h3>
+            <p class="card-desc">Civil procedure and substantive law materials.</p>
+            <a href="#" class="card-link">Download →</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-image">💼</div>
+          <div class="card-body">
+            <h3 class="card-title">Corporate Law Notes</h3>
+            <p class="card-desc">Company law and corporate governance notes.</p>
+            <a href="#" class="card-link">Download →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#courses">Courses</a></li>
+          <li><a href="#acts">Bare Acts</a></li>
+          <li><a href="#rules">Rules</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#knowledge">Legal Knowledge</a></li>
+          <li><a href="#copys">Study Notes</a></li>
+          <li><a href="#exams">Government Exams</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="#contact">Contact Us</a></li>
+          <li><a href="#clientele">Our Clientele</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms &amp; Conditions</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2024 Law Students. All rights reserved. | Empowering Legal Education</p>
+    </div>
+  </footer>
+</section>
+
+<!-- Clientele Page -->
+<section data-screen-label="11" style="background: #0f0f0f; min-height: 100vh; padding-top: 80px;">
+  <header class="header">
+    <div class="logo-section">
+      <img src="./logo-full.png" alt="Law Students">
+      <span class="logo-text">LAW STUDENTS</span>
+    </div>
+  </header>
+
+  <div style="padding: 50px 20px;">
+    <div style="max-width: 1000px; margin: 0 auto;">
+      <h2 class="section-title">Our Esteemed Clients &amp; Learners</h2>
+      <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%); border: 2px solid #d4af37; padding: 40px; border-radius: 8px; margin-bottom: 40px;">
+        <p style="color: #b0b0b0; line-height: 1.8; margin: 0 0 20px 0;">At Law Students, we take pride in serving a diverse clientele including aspiring lawyers, law students, working professionals, and legal enthusiasts. Our courses are trusted by individuals who aim to build a strong foundation in legal studies and advance their careers in law.</p>
+        <p style="color: #b0b0b0; line-height: 1.8; margin: 0;">Our clients include students preparing for judiciary exams, professionals enhancing their legal expertise, and individuals seeking practical knowledge in criminal, corporate, and traffic law. We are committed to delivering high-quality education and real-world insights to every learner.</p>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px;">
+        <div style="background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); padding: 20px; border-radius: 8px; text-align: center;">
+          <div style="font-size: 36px; font-weight: 700; color: #000;">5000+</div>
+          <div style="color: #000; font-weight: 600; font-size: 14px; margin-top: 10px;">Active Learners</div>
+        </div>
+        <div style="background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); padding: 20px; border-radius: 8px; text-align: center;">
+          <div style="font-size: 36px; font-weight: 700; color: #000;">50+</div>
+          <div style="color: #000; font-weight: 600; font-size: 14px; margin-top: 10px;">Courses Offered</div>
+        </div>
+        <div style="background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); padding: 20px; border-radius: 8px; text-align: center;">
+          <div style="font-size: 36px; font-weight: 700; color: #000;">100+</div>
+          <div style="color: #000; font-weight: 600; font-size: 14px; margin-top: 10px;">Expert Instructors</div>
+        </div>
+        <div style="background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); padding: 20px; border-radius: 8px; text-align: center;">
+          <div style="font-size: 36px; font-weight: 700; color: #000;">10+</div>
+          <div style="color: #000; font-weight: 600; font-size: 14px; margin-top: 10px;">Years Experience</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#courses">Courses</a></li>
+          <li><a href="#acts">Bare Acts</a></li>
+          <li><a href="#rules">Rules</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#knowledge">Legal Knowledge</a></li>
+          <li><a href="#copys">Study Notes</a></li>
+          <li><a href="#exams">Government Exams</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="#contact">Contact Us</a></li>
+          <li><a href="#clientele">Our Clientele</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms &amp; Conditions</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2024 Law Students. All rights reserved. | Empowering Legal Education</p>
+    </div>
+  </footer>
+</section>
+
+<!-- Contact Us Page -->
+<section data-screen-label="12" style="background: #0f0f0f; min-height: 100vh; padding-top: 80px;">
+  <header class="header">
+    <div class="logo-section">
+      <img src="./logo-full.png" alt="Law Students">
+      <span class="logo-text">LAW STUDENTS</span>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%); padding: 40px 20px; text-align: center; border-bottom: 1px solid #d4af37;">
+    <h1 style="font-size: 36px; color: #d4af37; margin: 0;">Get In Touch</h1>
+    <p style="color: #b0b0b0; font-size: 15px; margin: 10px 0 0 0;">Join our network of aspiring lawyers and legal professionals</p>
+  </div>
+
+  <div style="padding: 50px 20px;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+      <!-- Join Our Client Network Section -->
+      <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%); border: 2px solid #d4af37; border-radius: 8px; padding: 40px; margin-bottom: 50px;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+          <!-- Form -->
+          <div>
+            <h3 style="color: #d4af37; margin: 0 0 10px 0; font-size: 20px; font-weight: 700;">Join Our Client Network</h3>
+            <p style="color: #b0b0b0; font-size: 13px; margin: 0 0 25px 0;">We respond within 30 minutes during business hours to guide you better</p>
+            <form style="display: flex; flex-direction: column; gap: 15px;">
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div>
+                  <label style="display: block; color: #d4af37; font-weight: 700; margin-bottom: 8px; font-size: 12px; text-transform: uppercase;">First Name *</label>
+                  <input type="text" placeholder="First Name" style="width: 100%; padding: 12px; background: #0f0f0f; border: 1px solid #d4af37; color: #b0b0b0; border-radius: 4px;">
+                </div>
+                <div>
+                  <label style="display: block; color: #d4af37; font-weight: 700; margin-bottom: 8px; font-size: 12px; text-transform: uppercase;">Last Name *</label>
+                  <input type="text" placeholder="Last Name" style="width: 100%; padding: 12px; background: #0f0f0f; border: 1px solid #d4af37; color: #b0b0b0; border-radius: 4px;">
+                </div>
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div>
+                  <label style="display: block; color: #d4af37; font-weight: 700; margin-bottom: 8px; font-size: 12px; text-transform: uppercase;">Phone Number *</label>
+                  <input type="tel" placeholder="10 digit mobile" style="width: 100%; padding: 12px; background: #0f0f0f; border: 1px solid #d4af37; color: #b0b0b0; border-radius: 4px;">
+                </div>
+                <div>
+                  <label style="display: block; color: #d4af37; font-weight: 700; margin-bottom: 8px; font-size: 12px; text-transform: uppercase;">Email Address</label>
+                  <input type="email" placeholder="your@email.com" style="width: 100%; padding: 12px; background: #0f0f0f; border: 1px solid #d4af37; color: #b0b0b0; border-radius: 4px;">
+                </div>
+              </div>
+              <div>
+                <label style="display: block; color: #d4af37; font-weight: 700; margin-bottom: 8px; font-size: 12px; text-transform: uppercase;">Interested Course / Service Type</label>
+                <select style="width: 100%; padding: 12px; background: #0f0f0f; border: 1px solid #d4af37; color: #b0b0b0; border-radius: 4px;">
+                  <option>Select a course type</option>
+                  <option>Criminal Law</option>
+                  <option>Corporate Law</option>
+                  <option>Traffic Law</option>
+                  <option>Constitutional Law</option>
+                  <option>Civil Law</option>
+                </select>
+              </div>
+              <div>
+                <label style="display: block; color: #d4af37; font-weight: 700; margin-bottom: 8px; font-size: 12px; text-transform: uppercase;">Learning Goals / Queries</label>
+                <textarea placeholder="Tell us about your learning goals or queries..." style="width: 100%; padding: 12px; background: #0f0f0f; border: 1px solid #d4af37; color: #b0b0b0; border-radius: 4px; resize: vertical; min-height: 100px;"></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary" style="margin-top: 10px;">Join Our Client Network →</button>
+            </form>
+          </div>
+
+          <!-- Clientele Info -->
+          <div>
+            <h3 style="color: #d4af37; margin: 0 0 15px 0; font-size: 20px; font-weight: 700;">Our Esteemed Clients &amp; Learners</h3>
+            <p style="color: #b0b0b0; font-size: 13px; margin: 0 0 15px 0; line-height: 1.6;">At Law Students, we take pride in serving a diverse clientele including aspiring lawyers, law students, working professionals, and legal enthusiasts. Our courses are trusted by individuals who aim to build a strong foundation in legal studies and advance their careers in law.</p>
+            <p style="color: #b0b0b0; font-size: 13px; margin: 0 0 20px 0; line-height: 1.6;">Our clients include students preparing for judiciary exams, professionals enhancing their legal expertise, and individuals seeking practical knowledge in criminal, corporate, and traffic law. We are committed to delivering high-quality education and real-world insights to every learner.</p>
+            
+            <!-- Client Types Grid -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+              <div style="padding: 12px; background: #0f0f0f; border: 1px solid #d4af37; border-radius: 4px;">
+                <p style="color: #d4af37; font-weight: 700; font-size: 12px; margin: 0 0 4px 0;">Law Students</p>
+                <p style="color: #b0b0b0; font-size: 11px; margin: 0;">LL.B. aspirants &amp; graduates</p>
+              </div>
+              <div style="padding: 12px; background: #0f0f0f; border: 1px solid #d4af37; border-radius: 4px;">
+                <p style="color: #d4af37; font-weight: 700; font-size: 12px; margin: 0 0 4px 0;">Bar Exam Takers</p>
+                <p style="color: #b0b0b0; font-size: 11px; margin: 0;">Judiciary &amp; bar exam prep</p>
+              </div>
+              <div style="padding: 12px; background: #0f0f0f; border: 1px solid #d4af37; border-radius: 4px;">
+                <p style="color: #d4af37; font-weight: 700; font-size: 12px; margin: 0 0 4px 0;">Professionals</p>
+                <p style="color: #b0b0b0; font-size: 11px; margin: 0;">Career advancement &amp; upskilling</p>
+              </div>
+              <div style="padding: 12px; background: #0f0f0f; border: 1px solid #d4af37; border-radius: 4px;">
+                <p style="color: #d4af37; font-weight: 700; font-size: 12px; margin: 0 0 4px 0;">Legal Enthusiasts</p>
+                <p style="color: #b0b0b0; font-size: 11px; margin: 0;">Interest in legal knowledge</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Information -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 50px;">
+        <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%); border: 2px solid #d4af37; padding: 25px; border-radius: 8px;">
+          <div style="font-size: 24px; margin-bottom: 12px;">📧</div>
+          <h4 style="color: #d4af37; margin: 0 0 8px 0; font-size: 14px; font-weight: 700; text-transform: uppercase;">Email</h4>
+          <p style="color: #b0b0b0; margin: 0; font-size: 13px;"><a href="mailto:info@lawstudents.com" style="color: #d4af37; text-decoration: none;">info@lawstudents.com</a></p>
+        </div>
+        <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%); border: 2px solid #d4af37; padding: 25px; border-radius: 8px;">
+          <div style="font-size: 24px; margin-bottom: 12px;">📱</div>
+          <h4 style="color: #d4af37; margin: 0 0 8px 0; font-size: 14px; font-weight: 700; text-transform: uppercase;">Phone</h4>
+          <p style="color: #b0b0b0; margin: 0; font-size: 13px;"><a href="tel:+91-XXXXXXXXXX" style="color: #d4af37; text-decoration: none;">+91-XXXXXXXXXX</a></p>
+        </div>
+        <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%); border: 2px solid #d4af37; padding: 25px; border-radius: 8px;">
+          <div style="font-size: 24px; margin-bottom: 12px;">⏱️</div>
+          <h4 style="color: #d4af37; margin: 0 0 8px 0; font-size: 14px; font-weight: 700; text-transform: uppercase;">Response Time</h4>
+          <p style="color: #b0b0b0; margin: 0; font-size: 13px;">30 mins during business hours</p>
+        </div>
+      </div>
+
+      <!-- FAQ Section -->
+      <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; padding: 40px; margin-bottom: 40px;">
+        <h3 style="color: #d4af37; margin: 0 0 30px 0; font-size: 22px; font-weight: 700; text-align: center;">Frequently Asked Questions</h3>
+        <div style="display: grid; gap: 20px;">
+          <div style="padding: 20px; background: #0f0f0f; border-left: 3px solid #d4af37; border-radius: 4px;">
+            <h4 style="color: #d4af37; margin: 0 0 10px 0; font-size: 14px; font-weight: 700;">What are the course duration and schedule options?</h4>
+            <p style="color: #b0b0b0; margin: 0; font-size: 12px; line-height: 1.6;">Our courses are self-paced with flexible learning schedules. You can access materials anytime and complete assignments on your own timeline. Most courses can be completed in 4-12 weeks depending on your pace.</p>
+          </div>
+          <div style="padding: 20px; background: #0f0f0f; border-left: 3px solid #d4af37; border-radius: 4px;">
+            <h4 style="color: #d4af37; margin: 0 0 10px 0; font-size: 14px; font-weight: 700;">Do you offer certification?</h4>
+            <p style="color: #b0b0b0; margin: 0; font-size: 12px; line-height: 1.6;">Yes, upon successful completion of any course, you'll receive a digital certificate recognizing your achievement.</p>
+          </div>
+          <div style="padding: 20px; background: #0f0f0f; border-left: 3px solid #d4af37; border-radius: 4px;">
+            <h4 style="color: #d4af37; margin: 0 0 10px 0; font-size: 14px; font-weight: 700;">What is the refund policy?</h4>
+            <p style="color: #b0b0b0; margin: 0; font-size: 12px; line-height: 1.6;">We offer a 7-day money-back guarantee if you're not satisfied with the course content or quality.</p>
+          </div>
+          <div style="padding: 20px; background: #0f0f0f; border-left: 3px solid #d4af37; border-radius: 4px;">
+            <h4 style="color: #d4af37; margin: 0 0 10px 0; font-size: 14px; font-weight: 700;">How can I interact with instructors?</h4>
+            <p style="color: #b0b0b0; margin: 0; font-size: 12px; line-height: 1.6;">You can reach out via email, live chat, or book a one-on-one consultation with our mentors for personalized guidance.</p>
+          </div>
+          <div style="padding: 20px; background: #0f0f0f; border-left: 3px solid #d4af37; border-radius: 4px;">
+            <h4 style="color: #d4af37; margin: 0 0 10px 0; font-size: 14px; font-weight: 700;">Are there any prerequisites?</h4>
+            <p style="color: #b0b0b0; margin: 0; font-size: 12px; line-height: 1.6;">Most courses are open to anyone interested in legal education. Some advanced courses may require prior knowledge of basics.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Client Resources -->
+      <div style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; padding: 40px; text-align: center;">
+        <h3 style="color: #d4af37; margin: 0 0 30px 0; font-size: 22px; font-weight: 700;">Client Resources &amp; Documents</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px;">
+          <a href="#" style="padding: 15px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); color: #000; border-radius: 4px; text-decoration: none; font-weight: 700; font-size: 13px; display: block; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.boxShadow='0 8px 20px rgba(212, 175, 55, 0.3)'" onmouseout="this.style.boxShadow='none'">Course Brochure →</a>
+          <a href="#" style="padding: 15px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); color: #000; border-radius: 4px; text-decoration: none; font-weight: 700; font-size: 13px; display: block; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.boxShadow='0 8px 20px rgba(212, 175, 55, 0.3)'" onmouseout="this.style.boxShadow='none'">Fee Structure →</a>
+          <a href="#" style="padding: 15px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); color: #000; border-radius: 4px; text-decoration: none; font-weight: 700; font-size: 13px; display: block; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.boxShadow='0 8px 20px rgba(212, 175, 55, 0.3)'" onmouseout="this.style.boxShadow='none'">Success Stories →</a>
+          <a href="#" style="padding: 15px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); color: #000; border-radius: 4px; text-decoration: none; font-weight: 700; font-size: 13px; display: block; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.boxShadow='0 8px 20px rgba(212, 175, 55, 0.3)'" onmouseout="this.style.boxShadow='none'">Testimonials →</a>
+          <a href="#" style="padding: 15px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); color: #000; border-radius: 4px; text-decoration: none; font-weight: 700; font-size: 13px; display: block; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.boxShadow='0 8px 20px rgba(212, 175, 55, 0.3)'" onmouseout="this.style.boxShadow='none'">FAQ →</a>
+          <a href="#" style="padding: 15px; background: linear-gradient(135deg, #d4af37 0%, #e6c547 100%); color: #000; border-radius: 4px; text-decoration: none; font-weight: 700; font-size: 13px; display: block; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.boxShadow='0 8px 20px rgba(212, 175, 55, 0.3)'" onmouseout="this.style.boxShadow='none'">Course Calendar →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#courses">Courses</a></li>
+          <li><a href="#acts">Bare Acts</a></li>
+          <li><a href="#rules">Rules</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#knowledge">Legal Knowledge</a></li>
+          <li><a href="#copys">Study Notes</a></li>
+          <li><a href="#exams">Government Exams</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="#contact">Contact Us</a></li>
+          <li><a href="#clientele">Our Clientele</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms &amp; Conditions</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2024 Law Students. All rights reserved. | Empowering Legal Education</p>
+    </div>
+  </footer>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: &quot;100%&quot;, &quot;height&quot;: &quot;800px&quot;}, &quot;primaryColor&quot;: {&quot;editor&quot;: &quot;color&quot;, &quot;default&quot;: &quot;#d4af37&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Theme Colors&quot;}, &quot;secondaryColor&quot;: {&quot;editor&quot;: &quot;color&quot;, &quot;default&quot;: &quot;#1a1a1a&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Theme Colors&quot;}, &quot;backgroundColor&quot;: {&quot;editor&quot;: &quot;color&quot;, &quot;default&quot;: &quot;#0f0f0f&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Theme Colors&quot;}, &quot;cardBackground&quot;: {&quot;editor&quot;: &quot;color&quot;, &quot;default&quot;: &quot;#2a2a2a&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Theme Colors&quot;}, &quot;textColor&quot;: {&quot;editor&quot;: &quot;color&quot;, &quot;default&quot;: &quot;#b0b0b0&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Theme Colors&quot;}, &quot;heroImage&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;📚&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Images &amp; Icons&quot;}, &quot;courseImage1&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;📚&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Images &amp; Icons&quot;}, &quot;courseImage2&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;⚖️&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Images &amp; Icons&quot;}, &quot;courseImage3&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;📋&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Images &amp; Icons&quot;}, &quot;courseImage4&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;💼&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Images &amp; Icons&quot;}, &quot;courseImage5&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;🏛️&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Images &amp; Icons&quot;}, &quot;courseImage6&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;✍️&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Images &amp; Icons&quot;}, &quot;showQuickAccess&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Display Options&quot;}, &quot;showAboutSection&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Display Options&quot;}, &quot;showFeaturedCourses&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Display Options&quot;}}">
+class Component extends DCLogic {
+  state = { currentPage: 0, menuOpen: false };
+
+  componentDidMount() {
+    const toggle = document.querySelector('.nav-toggle');
+    const menu = document.querySelector('.nav-menu');
+    if (toggle) {
+      toggle.addEventListener('click', () => {
+        menu.classList.toggle('active');
+        this.setState(s => ({ menuOpen: !s.menuOpen }));
+      });
+    }
+    document.querySelectorAll('.nav-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        menu.classList.remove('active');
+        this.setState({ menuOpen: false });
+      });
+    });
+  }
+  
+  renderVals() {
+    const primary = this.props.primaryColor ?? '#d4af37';
+    const getLightColor = (hex) => {
+      const num = parseInt(hex.replace('#', ''), 16);
+      const amt = 20;
+      const usePound = true;
+      const R = Math.min(255, (num >> 16) + amt);
+      const G = Math.min(255, (num >> 8 & 0x00FF) + amt);
+      const B = Math.min(255, (num & 0x0000FF) + amt);
+      return (usePound ? '#' : '') + (0x1000000 + (R << 16) + (G << 8) + B).toString(16).slice(1);
+    };
+    
+    return {
+      primaryColor: primary,
+      primaryLight: getLightColor(primary),
+      secondaryColor: this.props.secondaryColor ?? '#1a1a1a',
+      backgroundColor: this.props.backgroundColor ?? '#0f0f0f',
+      cardBackground: this.props.cardBackground ?? '#2a2a2a',
+      textColor: this.props.textColor ?? '#b0b0b0',
+      courseImage1: this.props.courseImage1 ?? '📚',
+      courseImage2: this.props.courseImage2 ?? '⚖️',
+      courseImage3: this.props.courseImage3 ?? '📋',
+      courseImage4: this.props.courseImage4 ?? '💼',
+      courseImage5: this.props.courseImage5 ?? '🏛️',
+      courseImage6: this.props.courseImage6 ?? '✍️',
+      showQuickAccess: this.props.showQuickAccess ?? true,
+      showAboutSection: this.props.showAboutSection ?? true,
+      showFeaturedCourses: this.props.showFeaturedCourses ?? true,
+      currentPage: this.state.currentPage
+    };
+  }
+}
+</script>
+</body>
+</html>
